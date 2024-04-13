@@ -105,12 +105,25 @@ class DummyData: ObservableObject{
                                  CalendarDate(date: Date(timeIntervalSince1970: TimeInterval(1712667376)))]
 }
 
-struct CategoryOfRecord: Identifiable{
+class CategoryOfRecord: Identifiable{
     let name: String
+    @Published var exists: Bool = false
+    @Published var moreInfo: String?
     var id: String { name }
+    
+    init(name: String){
+        self.name = name
+    }
 }
 
 class MetaData: ObservableObject{
     @Published var chosenDate = Date().startOfDay
-    @Published var categoriesOfRecords = [CategoryOfRecord(name: "Symptoms"), CategoryOfRecord(name: "Medicine"), CategoryOfRecord(name: "Lab Results")]
+    enum Categories: Int{
+        case symptomsRecord
+        case medicineRecord
+        case labResultsRecord
+    }
+    @Published var categoriesOfRecords: [CategoryOfRecord] = [CategoryOfRecord(name: "Symptoms"),
+                                                              CategoryOfRecord(name: "Medicine"),
+                                                              CategoryOfRecord(name: "Lab Results")]
 }

@@ -14,6 +14,8 @@ struct CalendarScreen: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var thisMonthRecords: [CalendarDate]
     
+    
+    
     var body: some View {
         NavigationStack{
             VStack {

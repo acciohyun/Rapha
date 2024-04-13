@@ -15,6 +15,7 @@ struct CalendarViewModel: UIViewRepresentable{
     @ObservedObject var metaData: MetaData
     @Environment(\.modelContext) private var modelContext
     @Query private var recordsSaved: [CalendarDate]
+//    @Query var chosenRecord: [CalendarDate]
     
     func makeUIView(context: Context) -> some UIView {
         let view = UICalendarView()
@@ -40,6 +41,7 @@ struct CalendarViewModel: UIViewRepresentable{
         var parent: CalendarViewModel
         @ObservedObject var metaData: MetaData
         @State var recordsSaved: [CalendarDate]
+        private var filteredRecords: [CalendarDate]?
         
         init(parent: CalendarViewModel, metaData: ObservedObject<MetaData>, recordsSaved: [CalendarDate]) {
             self.parent = parent
@@ -63,8 +65,40 @@ struct CalendarViewModel: UIViewRepresentable{
         
         @MainActor
         func dateSelection(_ selection: UICalendarSelectionSingleDate, didSelectDate dateComponents: DateComponents?) {
-            print("\(dateComponents?.date?.startOfDay ?? Date())")
-            metaData.chosenDate = dateComponents?.date?.startOfDay ?? Date()
+            if let selectedDate = dateComponents?.date?.startOfDay{
+                print("\(selectedDate)")
+                metaData.chosenDate = selectedDate
+                //change the metadata for symptoms and etc
+                do{
+                    filteredRecords = try recordsSaved.filter(#Predicate {$0.date.startOfDay == selectedDate})
+                }catch{
+                    print("Error in seeking record: \(error)")
+                    return
+                }
+                if filteredRecords!.count > 0{
+                    print("here")
+                    if let chosenRecord = filteredRecords?[0]{
+                        if let symptomsRecord = chosenRecord.symptoms{
+                            
+                        }
+                        if let medicineRecord = chosenRecord.medication{
+                            var medicineDataShown = metaData.categoriesOfRecords[1]
+                            if medicineRecord.amgevitaTaken{
+                                medicineDataShown.moreInfo = "Amgevita Taken"
+                                medicineDataShown.exists = true
+                            }
+                        }
+                        if let labResultRecord = chosenRecord.labResults{
+                            
+                        }
+                    }
+                }else{
+                    for category in metaData.categoriesOfRecords{
+                        category.exists = false
+                        category.moreInfo = nil
+                    }
+                }
+            }
         }
         
     }
