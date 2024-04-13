@@ -12,6 +12,7 @@ struct CalendarViewModel: UIViewRepresentable{
     let interval: DateInterval //how far in the past and future
     @ObservedObject var dummyData: DummyData
     @ObservedObject var metaData: MetaData
+    
     func makeUIView(context: Context) -> some UIView {
         let view = UICalendarView()
         let dateSelection = UICalendarSelectionSingleDate(delegate: context.coordinator)
@@ -46,8 +47,8 @@ struct CalendarViewModel: UIViewRepresentable{
         @MainActor
         func calendarView(_ calendarView: UICalendarView, decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
             //what we use to create icons or decorations
-            let record = dummyData.allRecords.filter{$0.date.startOfDay == dateComponents.date?.startOfDay}
-            if record.isEmpty{return nil}
+//            let record = dummyData.allRecords.filter{$0.date.startOfDay == dateComponents.date?.startOfDay}
+//            if record.isEmpty{return nil}
             return .image(UIImage(systemName: "star"), color: .red)            //filter items to find the same date as the datecomponent
             // based on items, return a view (if the records exist, show this)
         }
@@ -58,6 +59,5 @@ struct CalendarViewModel: UIViewRepresentable{
             print("\(dateComponents?.date?.startOfDay ?? Date())")
             metaData.chosenDate = dateComponents?.date?.startOfDay ?? Date()
         }
-        
     }
 }

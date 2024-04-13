@@ -10,23 +10,22 @@ import SwiftData
 
 @main
 struct RaphaApp: App {
-//    var sharedModelContainer: ModelContainer = {
-//        let schema = Schema([
-//            Item.self,
-//        ])
-//        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-//
-//        do {
-//            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-//        } catch {
-//            fatalError("Could not create ModelContainer: \(error)")
-//        }
-//    }()
+    var sharedModelContainer: ModelContainer = {
+        let schema = Schema([
+            CalendarDate.self,
+        ])
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+
+        do {
+            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+        } catch {
+            fatalError("Could not create ModelContainer: \(error)")
+        }
+    }()
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-        }
-//        .modelContainer(sharedModelContainer)
+            CalendarScreen().environmentObject(DummyData()).environmentObject(MetaData())
+        }.modelContainer(sharedModelContainer)
     }
 }
