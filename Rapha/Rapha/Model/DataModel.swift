@@ -8,12 +8,12 @@
 import Foundation
 import SwiftData
 
-@Model
+//@Model
 class CalendarDate{
-    @Relationship(deleteRule: .cascade, inverse: \Symptoms.date)
-    @Relationship(deleteRule: .cascade, inverse: \Medication.date)
-    @Relationship(deleteRule: .cascade, inverse: \LabResults.date)
-    
+//    @Relationship(deleteRule: .cascade, inverse: \Symptoms.date)
+//    @Relationship(deleteRule: .cascade, inverse: \Medication.date)
+//    @Relationship(deleteRule: .cascade, inverse: \LabResults.date)
+    var date: Date
     var symptoms: Symptoms?
     var medication: Medication?
     var labResults: LabResults?
@@ -36,12 +36,12 @@ class CalendarDate{
         return true
     }
     
-    
-    
-    init(){}
+    init(date: Date){
+        self.date = date
+    }
 }
 
-@Model
+//@Model
 class Symptoms{
     var date: CalendarDate
     var painAreas: [PainArea]?
@@ -69,7 +69,7 @@ class Symptoms{
     }
 }
 
-@Model
+//@Model
 class Medication{
     var date: CalendarDate
     var amgevitaTaken = false
@@ -79,7 +79,7 @@ class Medication{
     }
 }
 
-@Model
+//@Model
 class LabResults{
     var date: CalendarDate
     var inflammation: [String: Float] = ["ESR": 0,
@@ -89,9 +89,24 @@ class LabResults{
     }
 }
 
-@Model
+//@Model
 class PainArea{
     var coordinates: CGPoint = CGPoint(x: 0, y: 0)
     var notes: String = ""
     init(){}
+}
+
+class DummyData: ObservableObject{
+    @Published var allRecords = [CalendarDate(date: Date(timeIntervalSince1970: TimeInterval(1712926540))),
+                                 CalendarDate(date: Date(timeIntervalSince1970: TimeInterval(1712667376)))]
+}
+
+struct CategoryOfRecord: Identifiable{
+    let name: String
+    var id: String { name }
+}
+
+class MetaData: ObservableObject{
+    @Published var chosenDate = Date().startOfDay
+    @Published var categoriesOfRecords = [CategoryOfRecord(name: "Symptoms"), CategoryOfRecord(name: "Medicine"), CategoryOfRecord(name: "Lab Results")]
 }
