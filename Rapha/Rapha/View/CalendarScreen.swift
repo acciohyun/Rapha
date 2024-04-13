@@ -10,7 +10,6 @@ import SwiftUI
 import SwiftData
 
 struct CalendarScreen: View {
-    @EnvironmentObject var dummyData: DummyData
     @EnvironmentObject var metaData: MetaData
     @Environment(\.modelContext) private var modelContext
     @Query private var thisMonthRecords: [CalendarDate]
@@ -18,9 +17,9 @@ struct CalendarScreen: View {
     var body: some View {
         NavigationStack{
             VStack {
-                CalendarViewModel(interval: DateInterval(start: .distantPast, end: .distantFuture), dummyData: dummyData, metaData: metaData).modelContainer(for: CalendarDate.self, inMemory: true)
+                CalendarViewModel(interval: DateInterval(start: .distantPast, end: .distantFuture), metaData: metaData)
                 List(metaData.categoriesOfRecords){ recordCategory in
-                    RecordCategoryCellView(recordCategory: recordCategory).environmentObject(dummyData).environmentObject(metaData)
+                    RecordCategoryCellView(recordCategory: recordCategory).environmentObject(metaData)
                 }
             }.onAppear(){
                 print(thisMonthRecords)
