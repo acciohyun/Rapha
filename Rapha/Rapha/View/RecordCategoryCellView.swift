@@ -14,7 +14,7 @@ struct RecordCategoryCellView: View {
     @State var recordCategory: CategoryOfRecord
     
     var body: some View {
-        NavigationLink(destination: CalendarScreen()){
+        NavigationLink(value: recordCategory.name){
             HStack{
                 Image(systemName: "circle")
                     .resizable()
@@ -26,6 +26,13 @@ struct RecordCategoryCellView: View {
                         Text(subtitle)
                     }
                 }
+            }
+        }.navigationDestination(for: String.self){ record in
+            switch record{
+            case "Symptoms":
+                RecordSymptomsScreen().environmentObject(metaData)
+            default:
+                RecordSymptomsScreen().environmentObject(metaData)
             }
         }
     }

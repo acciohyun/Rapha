@@ -97,7 +97,10 @@ class PainArea{
     var coordinateX: Float = 0
     var coordinateY: Float = 0
     var notes: String = ""
-    init(){}
+    init(x: Float, y: Float){
+        self.coordinateX = x
+        self.coordinateY = y
+    }
 }
 
 class DummyData: ObservableObject{

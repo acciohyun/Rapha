@@ -14,4 +14,6 @@ struct RecordsModel{
         let sumFiveAndSix: Float = (qnsBASDAI["Q5"] ?? 0) + (qnsBASDAI["Q6"] ?? 0)
         return (sumOneToFour + sumFiveAndSix / 2) / 5
     }  
+    
+    let qnsBASDAI = ["Level of Fatigue"]
 }

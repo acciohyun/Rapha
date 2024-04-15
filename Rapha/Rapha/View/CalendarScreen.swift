@@ -11,7 +11,7 @@ import SwiftData
 
 struct CalendarScreen: View {
     @EnvironmentObject var metaData: MetaData
-    @Environment(\.modelContext) private var modelContext
+    @Environment(\.modelContext) var modelContext
     @Query private var thisMonthRecords: [CalendarDate]
     
     
@@ -32,5 +32,4 @@ struct CalendarScreen: View {
 
 #Preview {
     CalendarScreen().environmentObject(DummyData()).environmentObject(MetaData())
-        .modelContainer(for: CalendarDate.self, inMemory: true)
 }
