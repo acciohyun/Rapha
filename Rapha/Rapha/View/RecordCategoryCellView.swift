@@ -17,6 +17,9 @@ struct RecordCategoryCellView: View {
         NavigationLink(destination: CalendarScreen()){
             HStack{
                 Image(systemName: "circle")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 10)
                 VStack{
                     Text(recordCategory.name)
                     if let subtitle = recordCategory.moreInfo{

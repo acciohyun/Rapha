@@ -11,11 +11,9 @@ import SwiftData
 
 struct CalendarViewModel: UIViewRepresentable{
     let interval: DateInterval //how far in the past and future
-//    @ObservedObject var dummyData: DummyData
     @ObservedObject var metaData: MetaData
     @Environment(\.modelContext) private var modelContext
     @Query private var recordsSaved: [CalendarDate]
-//    @Query var chosenRecord: [CalendarDate]
     
     func makeUIView(context: Context) -> some UIView {
         let view = UICalendarView()
@@ -54,7 +52,13 @@ struct CalendarViewModel: UIViewRepresentable{
 
             let record = recordsSaved.filter{$0.date.startOfDay == dateComponents.date?.startOfDay}
             if record.isEmpty{return nil}
-            return .image(UIImage(systemName: "star"), color: .red)
+            
+            let renderer = ImageRenderer(content: CalendarCellRecordsView(record: record[0]))
+            renderer.scale = 3
+            if let uiImage = renderer.uiImage {
+                return .image(uiImage)
+            }
+            return nil
         }
         
         

@@ -32,8 +32,12 @@ struct RaphaApp: App {
             )
             let newDummyEvent1 = CalendarDate(date: Date())
             let newDummyMed = Medication(date: newDummyEvent1)
+            let newDummySymp = Symptoms(date: newDummyEvent1)
+            let newDummyLab = LabResults(date: newDummyEvent1)
             newDummyMed.amgevitaTaken = true
             newDummyEvent1.medication = newDummyMed
+            newDummyEvent1.symptoms = newDummySymp
+            newDummyEvent1.labResults = newDummyLab
             container.mainContext.insert(newDummyEvent1)
             print("dummy")
             
