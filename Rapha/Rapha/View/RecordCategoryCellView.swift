@@ -20,7 +20,7 @@ struct RecordCategoryCellView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 10)
-                VStack{
+                VStack(alignment: .leading){
                     Text(recordCategory.name)
                     if let subtitle = recordCategory.moreInfo{
                         Text(subtitle)

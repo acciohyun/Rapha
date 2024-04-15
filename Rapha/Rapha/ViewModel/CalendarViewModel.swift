@@ -23,6 +23,10 @@ struct CalendarViewModel: UIViewRepresentable{
         view.availableDateRange = interval
         view.selectionBehavior = dateSelection
         dateSelection.selectedDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: Date())
+        
+//        dateSelection.setSelected(Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: Date()), animated: false)
+        print("before selection")
+        context.coordinator.dateSelection(dateSelection, didSelectDate: Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: metaData.chosenDate))
         return view
     }
     func makeCoordinator() -> Coordinator {
@@ -40,6 +44,7 @@ struct CalendarViewModel: UIViewRepresentable{
         @ObservedObject var metaData: MetaData
         @State var recordsSaved: [CalendarDate]
         private var filteredRecords: [CalendarDate]?
+        let calculations = RecordsModel()
         
         init(parent: CalendarViewModel, metaData: ObservedObject<MetaData>, recordsSaved: [CalendarDate]) {
             self.parent = parent
@@ -49,7 +54,6 @@ struct CalendarViewModel: UIViewRepresentable{
         
         @MainActor
         func calendarView(_ calendarView: UICalendarView, decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
-
             let record = recordsSaved.filter{$0.date.startOfDay == dateComponents.date?.startOfDay}
             if record.isEmpty{return nil}
             
@@ -69,10 +73,10 @@ struct CalendarViewModel: UIViewRepresentable{
         
         @MainActor
         func dateSelection(_ selection: UICalendarSelectionSingleDate, didSelectDate dateComponents: DateComponents?) {
-            if let selectedDate = dateComponents?.date?.startOfDay{
-                print("\(selectedDate)")
-                metaData.chosenDate = selectedDate
-                //change the metadata for symptoms and etc
+            if let selectedDate = Calendar.current.date(from: dateComponents!)?.startOfDay{
+                DispatchQueue.main.async{
+                    self.metaData.chosenDate = selectedDate
+                }
                 do{
                     filteredRecords = try recordsSaved.filter(#Predicate {$0.date.startOfDay == selectedDate})
                 }catch{
@@ -83,17 +87,29 @@ struct CalendarViewModel: UIViewRepresentable{
                     print("here")
                     if let chosenRecord = filteredRecords?[0]{
                         if let symptomsRecord = chosenRecord.symptoms{
-                            
+                            let symptomsDataShown = metaData.categoriesOfRecords[0]
+                            if let painAreas = symptomsRecord.painAreas{
+                                painAreas.count > 0 ? symptomsDataShown.moreInfo = "\(painAreas.count) Pain Areas, ": nil
+                            }
+                            let scoreBASDAI = calculations.calculatedBASDAI(qnsBASDAI: symptomsRecord.qnsBASDAI)
+                            if scoreBASDAI > 0{
+                                if symptomsDataShown.moreInfo != nil{
+                                    symptomsDataShown.moreInfo! += "\(scoreBASDAI) BASDAI score"
+                                }else{
+                                    symptomsDataShown.moreInfo = "\(scoreBASDAI) BASDAI score"
+                                }
+                            }
                         }
                         if let medicineRecord = chosenRecord.medication{
-                            var medicineDataShown = metaData.categoriesOfRecords[1]
+                            let medicineDataShown = metaData.categoriesOfRecords[1]
                             if medicineRecord.amgevitaTaken{
                                 medicineDataShown.moreInfo = "Amgevita Taken"
                                 medicineDataShown.exists = true
                             }
                         }
                         if let labResultRecord = chosenRecord.labResults{
-                            
+                            let labDataShown = metaData.categoriesOfRecords[2]
+                            labDataShown.moreInfo = "ESR: \(labResultRecord.inflammation["ESR"] ?? 0), CRP: \(labResultRecord.inflammation["CRP"] ?? 0)"
                         }
                     }
                 }else{

@@ -116,6 +116,7 @@ class CategoryOfRecord: Identifiable{
     }
 }
 
+@MainActor
 class MetaData: ObservableObject{
     @Published var chosenDate = Date().startOfDay
     enum Categories: Int{
