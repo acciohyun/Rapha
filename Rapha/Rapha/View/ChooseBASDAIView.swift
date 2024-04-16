@@ -15,15 +15,20 @@ struct ChooseBASDAIView: View {
     @Bindable var symptomData: Symptoms
     
     var body: some View {
-            ForEach(record.qnsCollection){qns in
-                HStack {
-                    VStack{
-                        Text(qns.mainQns)
-                        Text(qns.subQns)
-                    }
-//                    Picker(selection: <#T##Binding<Hashable>#>, content: <#T##() -> View#>, label: <#T##() -> View#>)
+        ForEach(record.qnsCollection){qns in
+            HStack {
+                VStack{
+                    Text(qns.mainQns)
+                    Text(qns.subQns)
                 }
+                //                    Picker(selection: <#T##Binding<Hashable>#>, content: <#T##() -> View#>, label: <#T##() -> View#>)
+                Picker("", selection: $symptomData.qnsBASDAI[qns.id]) {
+                    ForEach(0..<11, id: \.self) { i in
+                        Text("\(i)").tag(Optional(Float(i)))
+                    }
+                }.id(qns.id)
             }
+        }
     }
 }
 
