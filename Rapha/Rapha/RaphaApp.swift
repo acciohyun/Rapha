@@ -33,6 +33,7 @@ struct RaphaApp: App {
             let newDummyEvent1 = CalendarDate(date: Date())
             let newDummyMed = Medication(date: newDummyEvent1)
             let newDummySymp = Symptoms(date: newDummyEvent1)
+            newDummySymp.painAreas = [PainArea(x: 0, y: 0)]
             let newDummyLab = LabResults(date: newDummyEvent1)
             newDummyMed.amgevitaTaken = true
             newDummyEvent1.medication = newDummyMed

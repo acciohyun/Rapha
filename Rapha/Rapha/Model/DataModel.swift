@@ -46,6 +46,7 @@ class CalendarDate: ObservableObject{
 
 @Model
 class Symptoms{
+    let type = "Symptoms"
     var date: CalendarDate
     var painAreas: [PainArea]?
     var qnsBASDAI: [String : Float] = ["Q1": 0,
@@ -74,6 +75,7 @@ class Symptoms{
 
 @Model
 class Medication{
+    let type = "Medication"
     var date: CalendarDate
     var amgevitaTaken = false
     var notes: String?
@@ -84,6 +86,7 @@ class Medication{
 
 @Model
 class LabResults{
+    let type = "Lab Results"
     var date: CalendarDate
     var inflammation: [String: Float] = ["ESR": 0,
                                          "CRP": 0]
@@ -93,7 +96,7 @@ class LabResults{
 }
 
 @Model
-class PainArea{
+class PainArea: ObservableObject{
     var coordinateX: Float = 0
     var coordinateY: Float = 0
     var notes: String = ""

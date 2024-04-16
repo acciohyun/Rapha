@@ -7,33 +7,50 @@
 
 import Foundation
 import SwiftUI
-
+import SwiftData
 
 struct RecordSymptomsScreen: View {
     @EnvironmentObject var metaData: MetaData
     @Environment(\.modelContext) private var modelContext
-    //    @Query private var thisMonthRecords: [CalendarDate]
+    @Bindable var symptomData: Symptoms
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading){
-                Text("\(metaData.chosenDate)")
+        Text("\(metaData.chosenDate)")
+        List {
+            Section {
+                VStack(alignment: .leading){
+                    PainAreasView(symptomData: symptomData)
+                }
+            } header: {
                 HStack {
                     Text("Pain areas")
                     Spacer()
                     Text("2")
                 }
-                PainAreasView()
+            }
+            Section {
+                ChooseBASDAIView(symptomData: symptomData)
+            } header: {
                 HStack {
                     Text("BASDAI")
                     Spacer()
                     Text("2")
                 }
-            }.navigationTitle("Symptoms")
+            }
+            Section{
+                //textinput
+            }header:{
+                Text("Notes:")
+            }
+            
+            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+               Text("Button")
+            })
         }
+        .navigationTitle("Symptoms")
     }
 }
 
-#Preview {
-    RecordSymptomsScreen().environmentObject(MetaData())
-}
+//#Preview {
+//    RecordSymptomsScreen().environmentObject(MetaData())
+//}

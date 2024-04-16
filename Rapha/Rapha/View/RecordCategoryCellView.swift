@@ -7,11 +7,15 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 
 struct RecordCategoryCellView: View {
     @EnvironmentObject var dummyData: DummyData
     @EnvironmentObject var metaData: MetaData
     @State var recordCategory: CategoryOfRecord
+    @Query var allRecords: [CalendarDate]
+    @State var thisDateRecord: CalendarDate?
+    @State var symptomsData: Symptoms?
     
     var body: some View {
         NavigationLink(value: recordCategory.name){
@@ -27,12 +31,25 @@ struct RecordCategoryCellView: View {
                     }
                 }
             }
-        }.navigationDestination(for: String.self){ record in
+        }.onAppear(){
+            thisDateRecord = allRecords.filter({$0.date.startOfDay == metaData.chosenDate.startOfDay}).first
+            if let thisDateRecord{
+                if let symptoms = thisDateRecord.symptoms{
+                    symptomsData = symptoms
+                }else{
+                    symptomsData = Symptoms(date: thisDateRecord)
+                }
+            }else{
+                thisDateRecord = CalendarDate(date: metaData.chosenDate)
+                symptomsData = Symptoms(date: thisDateRecord!)
+            }
+        }
+        .navigationDestination(for: String.self){ record in
             switch record{
             case "Symptoms":
-                RecordSymptomsScreen().environmentObject(metaData)
+                RecordSymptomsScreen(symptomData: symptomsData!).environmentObject(metaData)
             default:
-                RecordSymptomsScreen().environmentObject(metaData)
+                RecordSymptomsScreen(symptomData: symptomsData!).environmentObject(metaData)
             }
         }
     }

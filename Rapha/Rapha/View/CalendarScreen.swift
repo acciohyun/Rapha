@@ -13,8 +13,7 @@ struct CalendarScreen: View {
     @EnvironmentObject var metaData: MetaData
     @Environment(\.modelContext) var modelContext
     @Query private var thisMonthRecords: [CalendarDate]
-    
-    
+  
     
     var body: some View {
         NavigationStack{

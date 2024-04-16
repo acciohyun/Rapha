@@ -9,12 +9,7 @@ import Foundation
 import SwiftUI
 
 struct PainAreasView: View {
-    //    @EnvironmentObject var metaData: MetaData
-    //    @Environment(\.modelContext) private var modelContext
-    //    @Query private var thisMonthRecords: [CalendarDate]
-    @State var painAreas = [PainArea]()
-    //    @State var painAreas = [PainArea(x: 25, y: 200)]
-    @State var demo: PainArea?
+    @Bindable var symptomData: Symptoms
     
     var body: some View {
         ZStack(alignment: .center){
@@ -27,24 +22,31 @@ struct PainAreasView: View {
             }.onTapGesture{ location in
                 print("Tapped at \(location)")
                 addPoint(at: location)
-                print(painAreas)
+                print("Tapped at \(symptomData.painAreas)")
             }
-            ForEach(painAreas){ painPoint in
-                Circle()
-                    .scaledToFit()
-                    .frame(width: 15)
-                    .foregroundColor(.red)
-                    .position(x:CGFloat(painPoint.coordinateX + 105), y: CGFloat(painPoint.coordinateY))
+            if let painAreas = symptomData.painAreas{
+                ForEach(painAreas){ painPoint in
+                    Circle()
+                        .scaledToFit()
+                        .frame(width: 15)
+                        .foregroundColor(.red)
+                        .position(x:CGFloat(painPoint.coordinateX + 65), y: CGFloat(painPoint.coordinateY))
+                }
             }
         }
         .aspectRatio(2.68, contentMode: .fit)
     }
     
     func addPoint(at location: CGPoint){
-        painAreas.append(PainArea(x: Float(location.x), y: Float(location.y)))
+        if symptomData.painAreas != nil {
+            print("added")
+            symptomData.painAreas?.append(PainArea(x: Float(location.x), y: Float(location.y)))
+        }else{
+            symptomData.painAreas = [PainArea(x: Float(location.x), y: Float(location.y))]
+        }
     }
 }
 
-#Preview {
-    RecordSymptomsScreen().environmentObject(MetaData())
-}
+//#Preview {
+//    RecordSymptomsScreen().environmentObject(MetaData())
+//}

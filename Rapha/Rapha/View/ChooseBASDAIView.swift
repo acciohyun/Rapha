@@ -12,15 +12,22 @@ struct ChooseBASDAIView: View {
     @EnvironmentObject var metaData: MetaData
     @Environment(\.modelContext) var modelContext
     let record = RecordsModel()
-//    @Query private var thisMonthRecords: [CalendarDate]
+    @Bindable var symptomData: Symptoms
+    
     var body: some View {
-        Text("list here")
-//        List(record.qnsBASDAI){_ in
-//
-//        }
+            ForEach(record.qnsCollection){qns in
+                HStack {
+                    VStack{
+                        Text(qns.mainQns)
+                        Text(qns.subQns)
+                    }
+//                    Picker(selection: <#T##Binding<Hashable>#>, content: <#T##() -> View#>, label: <#T##() -> View#>)
+                }
+            }
     }
 }
 
-#Preview {
-    RecordSymptomsScreen().environmentObject(MetaData())
-}
+//#Preview {
+////    RecordSymptomsScreen().environmentObject(MetaData())
+////    ChooseBASDAIView()
+//}
