@@ -20,17 +20,12 @@ struct CalendarScreen: View {
         NavigationStack{
             VStack {
                 CalendarView(interval: DateInterval(start: .distantPast, end: .distantFuture), metaData: metaData, selectedDate: $currentDate)
-                List(metaData.categoriesOfRecords){ recordCategory in
-                    RecordCategoryCellView(recordCategory: recordCategory).environmentObject(metaData)
-                }
-            }.onChange(of: currentDate){ oldValue, newValue in
-                currentCalendarData = allRecords.filter({ $0.date.startOfDay == newValue.startOfDay}).first
-                print("onchange: \(currentDate)")
+                RecordsListView(currentDate: $currentDate).environmentObject(metaData)
             }
         }
     }
 }
 
-#Preview {
-    CalendarScreen().environmentObject(DummyData()).environmentObject(MetaData())
-}
+//#Preview {
+//    CalendarScreen().environmentObject(DummyData()).environmentObject(MetaData())
+//}
