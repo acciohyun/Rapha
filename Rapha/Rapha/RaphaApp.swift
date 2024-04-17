@@ -50,7 +50,7 @@ struct RaphaApp: App {
 
     var body: some Scene {
         WindowGroup {
-            CalendarScreen()
+            CalendarScreen().environmentObject(RecordsModel())
 //                .environmentObject(DummyData()).environmentObject(MetaData())
         }.modelContainer(previewContainer)
     }

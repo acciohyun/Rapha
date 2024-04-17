@@ -14,16 +14,19 @@ struct CalendarView: UIViewRepresentable{
     @Environment(\.modelContext) private var modelContext
     @Query var recordsSaved: [CalendarDate]
     @Binding var selectedDate: Date
+    @State var calendarView: UICalendarView?
     
     func makeUIView(context: Context) -> UICalendarView {
         let view = UICalendarView()
+        DispatchQueue.main.asyncAfter(deadline: .now()){
+            self.calendarView = view
+        }
         let dateSelection = UICalendarSelectionSingleDate(delegate: context.coordinator)
         view.delegate = context.coordinator
         view.calendar = Calendar(identifier: .gregorian)
         view.availableDateRange = interval
         view.selectionBehavior = dateSelection
         dateSelection.selectedDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: Date())
-        context.coordinator.dateSelection(dateSelection, didSelectDate: Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: selectedDate))
         return view
     }
     func makeCoordinator() -> Coordinator {
@@ -34,6 +37,7 @@ struct CalendarView: UIViewRepresentable{
         print("Update")
         print("A: \(recordsSaved.count)")
         uiView.reloadDecorations(forDateComponents: recordsSaved.map{Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: $0.date)}, animated: true)
+//        context.coordinator.calendarView(calendarView ?? UICalendarView(), didChangeVisibleDateComponentsFrom: Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: selectedDate))
     }
     
     class Coordinator: NSObject, UICalendarViewDelegate, UICalendarSelectionSingleDateDelegate{
@@ -44,6 +48,7 @@ struct CalendarView: UIViewRepresentable{
         private var filteredRecords: [CalendarDate]?
         let calculations = RecordsModel()
         @Binding var selectedDate: Date
+        
         var computedRecords: [CalendarDate]{
             print("savedRecords: \(savedRecords.count)")
             return savedRecords
@@ -57,8 +62,8 @@ struct CalendarView: UIViewRepresentable{
         
         @MainActor
         func calendarView(_ calendarView: UICalendarView, decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
-            let record = computedRecords.filter{$0.date.startOfDay == dateComponents.date?.startOfDay}
-            print("B: \(computedRecords.count)")
+            let record = savedRecords.filter{$0.date.startOfDay == dateComponents.date?.startOfDay}
+            print("B: \(savedRecords.count)")
             if record.isEmpty{return nil}
             print("item: \(record[0].date)")
             let renderer = ImageRenderer(content: CalendarCellRecordsView(record: record[0]))
@@ -75,6 +80,10 @@ struct CalendarView: UIViewRepresentable{
             print(previousDateComponents)
         }
         
+        func dateSelection(_ selection: UICalendarSelectionSingleDate, canSelectDate dateComponents: DateComponents?) -> Bool {
+            return true
+        }
+        
         @MainActor
         func dateSelection(_ selection: UICalendarSelectionSingleDate, didSelectDate dateComponents: DateComponents?) {
             print("C: \(savedRecords.count)")
@@ -83,47 +92,6 @@ struct CalendarView: UIViewRepresentable{
                 DispatchQueue.main.async{
                     self.selectedDate = selectedDate
                 }
-                do{
-                    filteredRecords = try savedRecords.filter(#Predicate {$0.date.startOfDay == selectedDate})
-                }catch{
-                    print("Error in seeking record: \(error)")
-                    return
-                }
-//                if filteredRecords!.count > 0{
-//                    print("here")
-//                    if let chosenRecord = filteredRecords?[0]{
-//                        if let symptomsRecord = chosenRecord.symptoms{
-//                            let symptomsDataShown = metaData.categoriesOfRecords[0]
-//                            if let painAreas = symptomsRecord.painAreas{
-//                                painAreas.count > 0 ? symptomsDataShown.moreInfo = "\(painAreas.count) Pain Areas, ": nil
-//                            }
-//                            let scoreBASDAI = calculations.calculatedBASDAI(qnsBASDAI: symptomsRecord.qnsBASDAI)
-//                            if scoreBASDAI > 0{
-//                                if symptomsDataShown.moreInfo != nil{
-//                                    symptomsDataShown.moreInfo! += "\(scoreBASDAI) BASDAI score"
-//                                }else{
-//                                    symptomsDataShown.moreInfo = "\(scoreBASDAI) BASDAI score"
-//                                }
-//                            }
-//                        }
-//                        if let medicineRecord = chosenRecord.medication{
-//                            let medicineDataShown = metaData.categoriesOfRecords[1]
-//                            if medicineRecord.amgevitaTaken{
-//                                medicineDataShown.moreInfo = "Amgevita Taken"
-//                                medicineDataShown.exists = true
-//                            }
-//                        }
-//                        if let labResultRecord = chosenRecord.labResults{
-//                            let labDataShown = metaData.categoriesOfRecords[2]
-//                            labDataShown.moreInfo = "ESR: \(labResultRecord.inflammation["ESR"] ?? 0), CRP: \(labResultRecord.inflammation["CRP"] ?? 0)"
-//                        }
-//                    }
-//                }else{
-//                    for category in metaData.categoriesOfRecords{
-//                        category.exists = false
-//                        category.moreInfo = nil
-//                    }
-//                }
             }
         }
         

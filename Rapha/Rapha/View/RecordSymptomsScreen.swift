@@ -52,6 +52,7 @@ struct RecordSymptomsScreen: View {
                 currentCalendarData = CalendarDate(date: currentDate)
                 modelContext.container.mainContext.insert(currentCalendarData!)
                 do {
+                    print("Saved")
                     try modelContext.save()
                 }catch{
                     print("not saved: error")

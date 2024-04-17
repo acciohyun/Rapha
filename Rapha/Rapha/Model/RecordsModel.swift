@@ -29,6 +29,7 @@ class RecordsModel: ObservableObject{
                          IndivQnsBASDAI(qnsNum: 5, mainQns: "Duration of morning stiffness", subQns: "5 is one hour, 10 is two or more hours")]
     
     var records: [CalendarDate]{
+        print("observed: \(allRecords)")
         return allRecords
     }
 }
