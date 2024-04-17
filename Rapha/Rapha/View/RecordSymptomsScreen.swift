@@ -22,47 +22,56 @@ struct RecordSymptomsScreen: View {
 //        Text("\(metaData.chosenDate)")
         Text("Current date:  \(currentDate)")
         List {
-            Section {
-                VStack(alignment: .leading){
-//                    PainAreasView(symptomData: symptomData)
+            if let symptoms = currentCalendarData?.symptoms{
+                Section {
+                    VStack(alignment: .leading){
+//                        PainAreasView(symptomData: currentCalendarData!.symptoms!)
+                        PainAreasView(currentDate: currentDate)
+                    }
+                } header: {
+                    HStack {
+                        Text("Pain areas")
+                        Spacer()
+                        Text("2")
+                    }
                 }
-            } header: {
-                HStack {
-                    Text("Pain areas")
-                    Spacer()
-                    Text("2")
+                Section {
+    //                ChooseBASDAIView(symptomData: symptomData)
+                } header: {
+                    HStack {
+                        Text("BASDAI")
+                        Spacer()
+                        Text("2")
+                    }
                 }
-            }
-            Section {
-//                ChooseBASDAIView(symptomData: symptomData)
-            } header: {
-                HStack {
-                    Text("BASDAI")
-                    Spacer()
-                    Text("2")
+                Section{
+                    //textinput
+                }header:{
+                    Text("Notes:")
                 }
-            }
-            Section{
-                //textinput
-            }header:{
-                Text("Notes:")
             }
             
-//            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-//               Text("Button")
-//            })
         }.onAppear(){
             currentCalendarData = allRecords.filter({ $0.date.startOfDay == currentDate.startOfDay}).first
             if let existingData = currentCalendarData{}else{
                 currentCalendarData = CalendarDate(date: currentDate)
                 modelContext.container.mainContext.insert(currentCalendarData!)
+                do {
+                    try modelContext.save()
+                }catch{
+                    print("not saved: error")
+                }
                 print("\(allRecords)")
             }
             if let symptoms = currentCalendarData?.symptoms{}else{
+                print("created symptoms")
                 currentCalendarData?.symptoms = Symptoms(date: currentCalendarData!)
             }
         }
         .navigationTitle("Symptoms")
+        Button("Save"){
+            try? modelContext.save()
+        }
     }
 }
 

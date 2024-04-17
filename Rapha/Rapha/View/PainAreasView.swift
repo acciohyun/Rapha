@@ -7,9 +7,13 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 
 struct PainAreasView: View {
-    @Bindable var symptomData: Symptoms
+    @State var symptomData: Symptoms?
+    @Environment(\.modelContext) private var modelContext
+    @Query var allRecords: [CalendarDate]
+    var currentDate: Date
     
     var body: some View {
         ZStack(alignment: .center){
@@ -22,9 +26,8 @@ struct PainAreasView: View {
             }.onTapGesture{ location in
                 print("Tapped at \(location)")
                 addPoint(at: location)
-                print("Tapped at \(symptomData.painAreas)")
             }
-            if let painAreas = symptomData.painAreas{
+            if let painAreas = symptomData?.painAreas{
                 ForEach(painAreas){ painPoint in
                     Circle()
                         .scaledToFit()
@@ -33,17 +36,30 @@ struct PainAreasView: View {
                         .position(x:CGFloat(painPoint.coordinateX + 65), y: CGFloat(painPoint.coordinateY))
                 }
             }
+        }.onAppear(){
+            symptomData = allRecords.filter({ $0.date.startOfDay == currentDate.startOfDay}).first?.symptoms
+            if let painAreas = symptomData?.painAreas{
+                print("svaed count: \(painAreas.count)")
+            }
+            print("todays: records\(allRecords)")
         }
         .aspectRatio(2.68, contentMode: .fit)
     }
     
     func addPoint(at location: CGPoint){
-        if symptomData.painAreas != nil {
+        if symptomData?.painAreas != nil {
             print("added")
-            symptomData.painAreas?.append(PainArea(x: Float(location.x), y: Float(location.y)))
+            symptomData!.painAreas?.append(PainArea(x: Float(location.x), y: Float(location.y)))
         }else{
-            symptomData.painAreas = [PainArea(x: Float(location.x), y: Float(location.y))]
+            symptomData!.painAreas = [PainArea(x: Float(location.x), y: Float(location.y))]
         }
+        do {
+            print("saved")
+            try modelContext.save()
+        }catch{
+            print("not saved: error")
+        }
+        print("\(symptomData!.painAreas!.count)")
     }
 }
 

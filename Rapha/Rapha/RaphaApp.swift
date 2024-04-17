@@ -41,7 +41,6 @@ struct RaphaApp: App {
             newDummyEvent1.labResults = newDummyLab
             container.mainContext.insert(newDummyEvent1)
             print("dummy")
-            
             return container
         } catch {
             fatalError("Failed to create container")
