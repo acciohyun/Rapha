@@ -13,6 +13,8 @@ struct RecordsListView: View {
     @Query var allRecords: [CalendarDate]
     @State var thisDateRecord: CalendarDate?
     @State var symptomsData: Symptoms?
+    @State var medicationData: Medication?
+    @State var labResultsData: LabResults?
 
     @State var currentCalendarData: CalendarDate?
     @Binding var currentDate: Date
@@ -26,7 +28,7 @@ struct RecordsListView: View {
     }
     
     var body: some View {
-        let symptomRecordType = RecordType.symptoms
+        
         List{
             ForEach(RecordType.allCases){ record in
                 NavigationLink(value: record){
@@ -39,11 +41,17 @@ struct RecordsListView: View {
                             Text(record.rawValue)
                             switch record{
                             case .symptoms:
-                                if let symptoms = currentCalendarData?.symptoms{
+                                if (currentCalendarData?.symptoms) != nil{
                                     Text("symptoms: ")
                                 }
-                            default:
-                                Text("no data")
+                            case .medication:
+                                if (currentCalendarData?.medication) != nil{
+                                    Text("medication: ")
+                                }
+                            case .labResults:
+                                if (currentCalendarData?.labResults) != nil{
+                                    Text("results: ")
+                                }
                             }
                         }
                     }
@@ -52,16 +60,20 @@ struct RecordsListView: View {
         }
         .onChange(of: currentDate){ oldValue, newValue in
             currentCalendarData = allRecords.filter({ $0.date.startOfDay == newValue.startOfDay}).first
-            if let currentCalendarData{
+            if currentCalendarData != nil{
             }else{
                 currentCalendarData = CalendarDate(date: currentDate)
             }
             symptomsData = currentCalendarData?.symptoms
+            medicationData = currentCalendarData?.medication
+            labResultsData = currentCalendarData?.labResults
         }
         .navigationDestination(for: RecordType.self){ record in
             switch record{
             case .symptoms:
                 RecordSymptomsScreen(currentDate: currentDate)
+            case .medication:
+                RecordMedicationScreen(currentDate: currentDate)
             default:
                 RecordSymptomsScreen(currentDate: currentDate)
             }

@@ -64,9 +64,9 @@ struct RecordSymptomsScreen: View {
             }
         }
         .navigationTitle("Symptoms")
-        Button("Save"){
-            try? modelContext.save()
-        }
+//        Button("Save"){
+//            try? modelContext.save()
+//        }
     }
 }
 

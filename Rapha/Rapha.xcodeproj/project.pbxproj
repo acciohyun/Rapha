@@ -15,6 +15,7 @@
 		6B3251AE2BCD08E300CA9709 /* RecordSymptomsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3251AD2BCD08E300CA9709 /* RecordSymptomsScreen.swift */; };
 		6B3251B02BCD0B2300CA9709 /* PainAreasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3251AF2BCD0B2300CA9709 /* PainAreasView.swift */; };
 		6B61C56E2BCF4BC500384863 /* AustinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B61C56D2BCF4BC500384863 /* AustinView.swift */; };
+		6B61C5712BCFBB1100384863 /* RecordMedicationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B61C5702BCFBB1100384863 /* RecordMedicationScreen.swift */; };
 		6BAE41B92BC91B6F0027C1DB /* RaphaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAE41B82BC91B6F0027C1DB /* RaphaApp.swift */; };
 		6BAE41BB2BC91B6F0027C1DB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAE41BA2BC91B6F0027C1DB /* ContentView.swift */; };
 		6BAE41BF2BC91B700027C1DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BAE41BE2BC91B700027C1DB /* Assets.xcassets */; };
@@ -56,6 +57,7 @@
 		6B3251AF2BCD0B2300CA9709 /* PainAreasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PainAreasView.swift; sourceTree = "<group>"; };
 		6B61C56D2BCF4BC500384863 /* AustinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AustinView.swift; sourceTree = "<group>"; };
 		6B61C56F2BCF69BD00384863 /* RaphaRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RaphaRelease.entitlements; sourceTree = "<group>"; };
+		6B61C5702BCFBB1100384863 /* RecordMedicationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordMedicationScreen.swift; sourceTree = "<group>"; };
 		6BAE41B52BC91B6F0027C1DB /* Rapha.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rapha.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BAE41B82BC91B6F0027C1DB /* RaphaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaphaApp.swift; sourceTree = "<group>"; };
 		6BAE41BA2BC91B6F0027C1DB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				6B3251AD2BCD08E300CA9709 /* RecordSymptomsScreen.swift */,
 				6B3251AF2BCD0B2300CA9709 /* PainAreasView.swift */,
 				6B0F39292BCD1CC5000019AB /* ChooseBASDAIView.swift */,
+				6B61C5702BCFBB1100384863 /* RecordMedicationScreen.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -342,6 +345,7 @@
 				6B3251AE2BCD08E300CA9709 /* RecordSymptomsScreen.swift in Sources */,
 				6B61C56E2BCF4BC500384863 /* AustinView.swift in Sources */,
 				6B3251A62BCAB74A00CA9709 /* ForSharing.swift in Sources */,
+				6B61C5712BCFBB1100384863 /* RecordMedicationScreen.swift in Sources */,
 				6BAE41EF2BC963A00027C1DB /* DateExtensions.swift in Sources */,
 				6B3251AA2BCCF95800CA9709 /* CalendarCellRecordsView.swift in Sources */,
 				6B0F392A2BCD1CC5000019AB /* ChooseBASDAIView.swift in Sources */,
