@@ -11,7 +11,6 @@ import SwiftData
 
 struct CalendarView: UIViewRepresentable{
     let interval: DateInterval //how far in the past and future
-    @ObservedObject var metaData: MetaData
     @Environment(\.modelContext) private var modelContext
     @Query private var recordsSaved: [CalendarDate]
     @Binding var selectedDate: Date
@@ -25,11 +24,11 @@ struct CalendarView: UIViewRepresentable{
         view.selectionBehavior = dateSelection
         dateSelection.selectedDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: Date())
         print("before selection")
-        context.coordinator.dateSelection(dateSelection, didSelectDate: Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: metaData.chosenDate))
+        context.coordinator.dateSelection(dateSelection, didSelectDate: Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: selectedDate))
         return view
     }
     func makeCoordinator() -> Coordinator {
-        Coordinator(parent: self, metaData: _metaData, recordsSaved: recordsSaved, selectedDate: $selectedDate)
+        Coordinator(parent: self, recordsSaved: recordsSaved, selectedDate: $selectedDate)
     }
     
     func updateUIView(_ uiView: UIViewType, context: Context) {
@@ -40,15 +39,13 @@ struct CalendarView: UIViewRepresentable{
         
         //this is the CalendarViewDelegate
         var parent: CalendarView
-        @ObservedObject var metaData: MetaData
         @State var recordsSaved: [CalendarDate]
         private var filteredRecords: [CalendarDate]?
         let calculations = RecordsModel()
         @Binding var selectedDate: Date
         
-        init(parent: CalendarView, metaData: ObservedObject<MetaData>, recordsSaved: [CalendarDate], selectedDate: Binding<Date>) {
+        init(parent: CalendarView, recordsSaved: [CalendarDate], selectedDate: Binding<Date>) {
             self.parent = parent
-            self._metaData = metaData
             self.recordsSaved = recordsSaved
             self._selectedDate = selectedDate
         }
@@ -77,7 +74,6 @@ struct CalendarView: UIViewRepresentable{
             if let selectedDate = Calendar.current.date(from: dateComponents!)?.startOfDay{
                 DispatchQueue.main.async{
                     self.selectedDate = selectedDate
-                    self.metaData.chosenDate = selectedDate
                 }
                 do{
                     filteredRecords = try recordsSaved.filter(#Predicate {$0.date.startOfDay == selectedDate})
@@ -85,41 +81,41 @@ struct CalendarView: UIViewRepresentable{
                     print("Error in seeking record: \(error)")
                     return
                 }
-                if filteredRecords!.count > 0{
-                    print("here")
-                    if let chosenRecord = filteredRecords?[0]{
-                        if let symptomsRecord = chosenRecord.symptoms{
-                            let symptomsDataShown = metaData.categoriesOfRecords[0]
-                            if let painAreas = symptomsRecord.painAreas{
-                                painAreas.count > 0 ? symptomsDataShown.moreInfo = "\(painAreas.count) Pain Areas, ": nil
-                            }
-                            let scoreBASDAI = calculations.calculatedBASDAI(qnsBASDAI: symptomsRecord.qnsBASDAI)
-                            if scoreBASDAI > 0{
-                                if symptomsDataShown.moreInfo != nil{
-                                    symptomsDataShown.moreInfo! += "\(scoreBASDAI) BASDAI score"
-                                }else{
-                                    symptomsDataShown.moreInfo = "\(scoreBASDAI) BASDAI score"
-                                }
-                            }
-                        }
-                        if let medicineRecord = chosenRecord.medication{
-                            let medicineDataShown = metaData.categoriesOfRecords[1]
-                            if medicineRecord.amgevitaTaken{
-                                medicineDataShown.moreInfo = "Amgevita Taken"
-                                medicineDataShown.exists = true
-                            }
-                        }
-                        if let labResultRecord = chosenRecord.labResults{
-                            let labDataShown = metaData.categoriesOfRecords[2]
-                            labDataShown.moreInfo = "ESR: \(labResultRecord.inflammation["ESR"] ?? 0), CRP: \(labResultRecord.inflammation["CRP"] ?? 0)"
-                        }
-                    }
-                }else{
-                    for category in metaData.categoriesOfRecords{
-                        category.exists = false
-                        category.moreInfo = nil
-                    }
-                }
+//                if filteredRecords!.count > 0{
+//                    print("here")
+//                    if let chosenRecord = filteredRecords?[0]{
+//                        if let symptomsRecord = chosenRecord.symptoms{
+//                            let symptomsDataShown = metaData.categoriesOfRecords[0]
+//                            if let painAreas = symptomsRecord.painAreas{
+//                                painAreas.count > 0 ? symptomsDataShown.moreInfo = "\(painAreas.count) Pain Areas, ": nil
+//                            }
+//                            let scoreBASDAI = calculations.calculatedBASDAI(qnsBASDAI: symptomsRecord.qnsBASDAI)
+//                            if scoreBASDAI > 0{
+//                                if symptomsDataShown.moreInfo != nil{
+//                                    symptomsDataShown.moreInfo! += "\(scoreBASDAI) BASDAI score"
+//                                }else{
+//                                    symptomsDataShown.moreInfo = "\(scoreBASDAI) BASDAI score"
+//                                }
+//                            }
+//                        }
+//                        if let medicineRecord = chosenRecord.medication{
+//                            let medicineDataShown = metaData.categoriesOfRecords[1]
+//                            if medicineRecord.amgevitaTaken{
+//                                medicineDataShown.moreInfo = "Amgevita Taken"
+//                                medicineDataShown.exists = true
+//                            }
+//                        }
+//                        if let labResultRecord = chosenRecord.labResults{
+//                            let labDataShown = metaData.categoriesOfRecords[2]
+//                            labDataShown.moreInfo = "ESR: \(labResultRecord.inflammation["ESR"] ?? 0), CRP: \(labResultRecord.inflammation["CRP"] ?? 0)"
+//                        }
+//                    }
+//                }else{
+//                    for category in metaData.categoriesOfRecords{
+//                        category.exists = false
+//                        category.moreInfo = nil
+//                    }
+//                }
             }
         }
         

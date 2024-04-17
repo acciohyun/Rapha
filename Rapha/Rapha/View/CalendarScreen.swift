@@ -10,7 +10,7 @@ import SwiftUI
 import SwiftData
 
 struct CalendarScreen: View {
-    @EnvironmentObject var metaData: MetaData
+//    @EnvironmentObject var metaData: MetaData
     @Environment(\.modelContext) var modelContext
     @Query private var allRecords: [CalendarDate]
     @State var currentDate: Date = Date()
@@ -19,8 +19,8 @@ struct CalendarScreen: View {
     var body: some View {
         NavigationStack{
             VStack {
-                CalendarView(interval: DateInterval(start: .distantPast, end: .distantFuture), metaData: metaData, selectedDate: $currentDate)
-                RecordsListView(currentDate: $currentDate).environmentObject(metaData)
+                CalendarView(interval: DateInterval(start: .distantPast, end: .distantFuture), selectedDate: $currentDate)
+                RecordsListView(currentDate: $currentDate)
             }
         }
     }

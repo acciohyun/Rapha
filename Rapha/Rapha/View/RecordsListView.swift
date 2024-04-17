@@ -10,9 +10,6 @@ import SwiftUI
 import SwiftData
 
 struct RecordsListView: View {
-    @EnvironmentObject var dummyData: DummyData
-    @EnvironmentObject var metaData: MetaData
-    //    @State var recordCategory: CategoryOfRecord
     @Query var allRecords: [CalendarDate]
     @State var thisDateRecord: CalendarDate?
     @State var symptomsData: Symptoms?
@@ -67,9 +64,9 @@ struct RecordsListView: View {
         .navigationDestination(for: RecordType.self){ record in
             switch record{
             case .symptoms:
-                RecordSymptomsScreen(currentDate: currentDate).environmentObject(metaData)
+                RecordSymptomsScreen(currentDate: currentDate)
             default:
-                RecordSymptomsScreen(currentDate: currentDate).environmentObject(metaData)
+                RecordSymptomsScreen(currentDate: currentDate)
             }
         }
     }

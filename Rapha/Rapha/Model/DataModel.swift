@@ -75,10 +75,6 @@ class PainArea: ObservableObject{
     }
 }
 
-class DummyData: ObservableObject{
-    @Published var allRecords = [CalendarDate(date: Date(timeIntervalSince1970: TimeInterval(1712926540))),
-                                 CalendarDate(date: Date(timeIntervalSince1970: TimeInterval(1712667376)))]
-}
 
 class CategoryOfRecord: Identifiable{
     let name: String
@@ -89,17 +85,4 @@ class CategoryOfRecord: Identifiable{
     init(name: String){
         self.name = name
     }
-}
-
-@MainActor
-class MetaData: ObservableObject{
-    @Published var chosenDate = Date().startOfDay
-    enum Categories: Int{
-        case symptomsRecord
-        case medicineRecord
-        case labResultsRecord
-    }
-    @Published var categoriesOfRecords: [CategoryOfRecord] = [CategoryOfRecord(name: "Symptoms"),
-                                                              CategoryOfRecord(name: "Medicine"),
-                                                              CategoryOfRecord(name: "Lab Results")]
 }

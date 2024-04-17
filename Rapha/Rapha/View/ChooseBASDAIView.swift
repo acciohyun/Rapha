@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 
 struct ChooseBASDAIView: View {
-    @EnvironmentObject var metaData: MetaData
     @Environment(\.modelContext) var modelContext
     let record = RecordsModel()
     @Bindable var symptomData: Symptoms

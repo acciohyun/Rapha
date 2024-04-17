@@ -10,10 +10,7 @@ import SwiftUI
 import SwiftData
 
 struct RecordSymptomsScreen: View {
-    @EnvironmentObject var metaData: MetaData
     @Environment(\.modelContext) private var modelContext
-//    @Bindable var symptomData: Symptoms
-//    @Binding var currentCalendarData: CalendarDate
     @State var currentCalendarData: CalendarDate?
     @Query var allRecords: [CalendarDate]
     var currentDate: Date

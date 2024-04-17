@@ -13,6 +13,7 @@ struct RaphaApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             CalendarDate.self,
+            Symptoms.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
 
@@ -49,7 +50,8 @@ struct RaphaApp: App {
 
     var body: some Scene {
         WindowGroup {
-            CalendarScreen().environmentObject(DummyData()).environmentObject(MetaData())
+            CalendarScreen()
+//                .environmentObject(DummyData()).environmentObject(MetaData())
         }.modelContainer(previewContainer)
     }
 }
