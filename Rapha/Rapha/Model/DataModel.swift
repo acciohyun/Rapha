@@ -10,7 +10,7 @@ import SwiftData
 
 @Model
 class CalendarDate: ObservableObject{
-  
+    
     @Attribute(.unique) var date: Date
     var symptoms: Symptoms?
     var medication: Medication?
@@ -19,26 +19,7 @@ class CalendarDate: ObservableObject{
     @Relationship(deleteRule: .cascade, inverse: \Symptoms.date)
     @Relationship(deleteRule: .cascade, inverse: \Medication.date)
     @Relationship(deleteRule: .cascade, inverse: \LabResults.date)
-    
-//    var symptomsFilled: Bool{
-//        guard symptoms != nil else {
-//            return false
-//        }
-//        return true
-//    }
-//    var medFilled: Bool{
-//        guard medication != nil else {
-//            return false
-//        }
-//        return true
-//    }
-//    var labResultsFilled: Bool{
-//        guard labResults != nil else {
-//            return false
-//        }
-//        return true
-//    }
-    
+
     init(date: Date){
         self.date = date
     }
@@ -50,23 +31,11 @@ class Symptoms{
     var date: CalendarDate
     var painAreas: [PainArea]?
     var qnsBASDAI: [String : Float] = ["Q1": 0,
-                     "Q2": 0,
-                     "Q3": 0,
-                     "Q4": 0,
-                     "Q5": 0,
-                     "Q6": 0]
-//    var numPainAreas: Int{
-//        if let pins = painAreas{
-//            return pins.count
-//        }else{
-//            return 0
-//        }
-//    }
-//    var scoreBASDAI: Float{
-//        let sumOneToFour: Float = (qnsBASDAI["Q1"] ?? 0) + (qnsBASDAI["Q2"] ?? 0) + (qnsBASDAI["Q3"] ?? 0) + (qnsBASDAI["Q4"] ?? 0)
-//        let sumFiveAndSix: Float = (qnsBASDAI["Q5"] ?? 0) + (qnsBASDAI["Q6"] ?? 0)
-//         return (sumOneToFour + sumFiveAndSix / 2) / 5
-//    }
+                                       "Q2": 0,
+                                       "Q3": 0,
+                                       "Q4": 0,
+                                       "Q5": 0,
+                                       "Q6": 0]
     var notes: String?
     init(date: CalendarDate){
         self.date = date

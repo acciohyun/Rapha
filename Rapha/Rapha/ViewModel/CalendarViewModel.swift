@@ -14,6 +14,7 @@ struct CalendarViewModel: UIViewRepresentable{
     @ObservedObject var metaData: MetaData
     @Environment(\.modelContext) private var modelContext
     @Query private var recordsSaved: [CalendarDate]
+    @Binding var selectedDate: Date
     
     func makeUIView(context: Context) -> some UIView {
         let view = UICalendarView()
@@ -23,14 +24,12 @@ struct CalendarViewModel: UIViewRepresentable{
         view.availableDateRange = interval
         view.selectionBehavior = dateSelection
         dateSelection.selectedDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: Date())
-        
-//        dateSelection.setSelected(Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: Date()), animated: false)
         print("before selection")
         context.coordinator.dateSelection(dateSelection, didSelectDate: Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: metaData.chosenDate))
         return view
     }
     func makeCoordinator() -> Coordinator {
-        Coordinator(parent: self, metaData: _metaData, recordsSaved: recordsSaved)
+        Coordinator(parent: self, metaData: _metaData, recordsSaved: recordsSaved, selectedDate: $selectedDate)
     }
     
     func updateUIView(_ uiView: UIViewType, context: Context) {
@@ -45,11 +44,13 @@ struct CalendarViewModel: UIViewRepresentable{
         @State var recordsSaved: [CalendarDate]
         private var filteredRecords: [CalendarDate]?
         let calculations = RecordsModel()
+        @Binding var selectedDate: Date
         
-        init(parent: CalendarViewModel, metaData: ObservedObject<MetaData>, recordsSaved: [CalendarDate]) {
+        init(parent: CalendarViewModel, metaData: ObservedObject<MetaData>, recordsSaved: [CalendarDate], selectedDate: Binding<Date>) {
             self.parent = parent
             self._metaData = metaData
             self.recordsSaved = recordsSaved
+            self._selectedDate = selectedDate
         }
         
         @MainActor
@@ -75,6 +76,7 @@ struct CalendarViewModel: UIViewRepresentable{
         func dateSelection(_ selection: UICalendarSelectionSingleDate, didSelectDate dateComponents: DateComponents?) {
             if let selectedDate = Calendar.current.date(from: dateComponents!)?.startOfDay{
                 DispatchQueue.main.async{
+                    self.selectedDate = selectedDate
                     self.metaData.chosenDate = selectedDate
                 }
                 do{

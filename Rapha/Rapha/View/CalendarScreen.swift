@@ -12,19 +12,24 @@ import SwiftData
 struct CalendarScreen: View {
     @EnvironmentObject var metaData: MetaData
     @Environment(\.modelContext) var modelContext
-    @Query private var thisMonthRecords: [CalendarDate]
-  
+    @Query private var allRecords: [CalendarDate]
+    @State var currentDate: Date = Date()
+    @State var currentCalendarData: CalendarDate?
     
     var body: some View {
         NavigationStack{
             VStack {
-                CalendarViewModel(interval: DateInterval(start: .distantPast, end: .distantFuture), metaData: metaData)
+                CalendarViewModel(interval: DateInterval(start: .distantPast, end: .distantFuture), metaData: metaData, selectedDate: $currentDate)
                 List(metaData.categoriesOfRecords){ recordCategory in
                     RecordCategoryCellView(recordCategory: recordCategory).environmentObject(metaData)
                 }
-            }.onAppear(){
-                print(thisMonthRecords)
+            }.onChange(of: currentDate){ oldValue, newValue in
+                currentCalendarData = allRecords.filter({ $0.date.startOfDay == newValue.startOfDay}).first
+                print("onchange: \(currentDate)")
             }
+//            .onAppear(){
+////                print(thisMonthRecords)
+//            }
         }
     }
 }
