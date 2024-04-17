@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import SwiftData
 
-struct CalendarViewModel: UIViewRepresentable{
+struct CalendarView: UIViewRepresentable{
     let interval: DateInterval //how far in the past and future
     @ObservedObject var metaData: MetaData
     @Environment(\.modelContext) private var modelContext
@@ -39,14 +39,14 @@ struct CalendarViewModel: UIViewRepresentable{
     class Coordinator: NSObject, UICalendarViewDelegate, UICalendarSelectionSingleDateDelegate{
         
         //this is the CalendarViewDelegate
-        var parent: CalendarViewModel
+        var parent: CalendarView
         @ObservedObject var metaData: MetaData
         @State var recordsSaved: [CalendarDate]
         private var filteredRecords: [CalendarDate]?
         let calculations = RecordsModel()
         @Binding var selectedDate: Date
         
-        init(parent: CalendarViewModel, metaData: ObservedObject<MetaData>, recordsSaved: [CalendarDate], selectedDate: Binding<Date>) {
+        init(parent: CalendarView, metaData: ObservedObject<MetaData>, recordsSaved: [CalendarDate], selectedDate: Binding<Date>) {
             self.parent = parent
             self._metaData = metaData
             self.recordsSaved = recordsSaved

@@ -19,7 +19,7 @@ struct CalendarScreen: View {
     var body: some View {
         NavigationStack{
             VStack {
-                CalendarViewModel(interval: DateInterval(start: .distantPast, end: .distantFuture), metaData: metaData, selectedDate: $currentDate)
+                CalendarView(interval: DateInterval(start: .distantPast, end: .distantFuture), metaData: metaData, selectedDate: $currentDate)
                 List(metaData.categoriesOfRecords){ recordCategory in
                     RecordCategoryCellView(recordCategory: recordCategory).environmentObject(metaData)
                 }
@@ -27,9 +27,6 @@ struct CalendarScreen: View {
                 currentCalendarData = allRecords.filter({ $0.date.startOfDay == newValue.startOfDay}).first
                 print("onchange: \(currentDate)")
             }
-//            .onAppear(){
-////                print(thisMonthRecords)
-//            }
         }
     }
 }
