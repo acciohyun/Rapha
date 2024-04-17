@@ -15,6 +15,7 @@ struct CalendarScreen: View {
     @Query private var allRecords: [CalendarDate]
     @State var currentDate: Date = Date()
     @State var currentCalendarData: CalendarDate?
+//    @Bindable var record = RecordsModel().records
     
     var body: some View {
         NavigationStack{

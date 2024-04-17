@@ -57,8 +57,8 @@ class Medication{
 class LabResults{
     let type = "Lab Results"
     var date: CalendarDate
-    var inflammation: [String: Float] = ["ESR": 0,
-                                         "CRP": 0]
+    var inflammation: [String: String] = ["ESR": "0",
+                                         "CRP": "0"]
     init(date: CalendarDate){
         self.date = date
     }

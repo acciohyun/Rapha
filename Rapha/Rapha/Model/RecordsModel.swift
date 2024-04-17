@@ -7,8 +7,14 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 
-struct RecordsModel{
+
+
+class RecordsModel: ObservableObject{
+    @Environment(\.modelContext) var modelContext
+    @Query var allRecords: [CalendarDate]
+    
     func calculatedBASDAI(qnsBASDAI: [String : Float] ) -> Float{
         let sumOneToFour: Float = (qnsBASDAI["Q1"] ?? 0) + (qnsBASDAI["Q2"] ?? 0) + (qnsBASDAI["Q3"] ?? 0) + (qnsBASDAI["Q4"] ?? 0)
         let sumFiveAndSix: Float = (qnsBASDAI["Q5"] ?? 0) + (qnsBASDAI["Q6"] ?? 0)
@@ -21,6 +27,10 @@ struct RecordsModel{
                          IndivQnsBASDAI(qnsNum: 3, mainQns: "Level of discomfort", subQns: "Discomfort from area tender to touch"),
                          IndivQnsBASDAI(qnsNum: 4, mainQns: "Level of morning stiffness", subQns: "From the time you wake up"),
                          IndivQnsBASDAI(qnsNum: 5, mainQns: "Duration of morning stiffness", subQns: "5 is one hour, 10 is two or more hours")]
+    
+    var records: [CalendarDate]{
+        return allRecords
+    }
 }
 
 struct IndivQnsBASDAI: Identifiable, Hashable{
@@ -33,4 +43,5 @@ struct IndivQnsBASDAI: Identifiable, Hashable{
         self.mainQns = mainQns
         self.subQns = subQns
     }
+    
 }

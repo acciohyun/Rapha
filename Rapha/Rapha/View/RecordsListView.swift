@@ -74,8 +74,8 @@ struct RecordsListView: View {
                 RecordSymptomsScreen(currentDate: currentDate)
             case .medication:
                 RecordMedicationScreen(currentDate: currentDate)
-            default:
-                RecordSymptomsScreen(currentDate: currentDate)
+            case .labResults:
+                RecordLabResultsView(currentDate: currentDate)
             }
         }
     }
