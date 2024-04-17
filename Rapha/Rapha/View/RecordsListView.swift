@@ -67,9 +67,9 @@ struct RecordsListView: View {
         .navigationDestination(for: RecordType.self){ record in
             switch record{
             case .symptoms:
-                RecordSymptomsScreen(symptomData: symptomsData!).environmentObject(metaData)
+                RecordSymptomsScreen(currentDate: currentDate).environmentObject(metaData)
             default:
-                RecordSymptomsScreen(symptomData: symptomsData!).environmentObject(metaData)
+                RecordSymptomsScreen(currentDate: currentDate).environmentObject(metaData)
             }
         }
     }

@@ -12,14 +12,19 @@ import SwiftData
 struct RecordSymptomsScreen: View {
     @EnvironmentObject var metaData: MetaData
     @Environment(\.modelContext) private var modelContext
-    @Bindable var symptomData: Symptoms
+//    @Bindable var symptomData: Symptoms
+//    @Binding var currentCalendarData: CalendarDate
+    @State var currentCalendarData: CalendarDate?
+    @Query var allRecords: [CalendarDate]
+    var currentDate: Date
     
     var body: some View {
-        Text("\(metaData.chosenDate)")
+//        Text("\(metaData.chosenDate)")
+        Text("Current date:  \(currentDate)")
         List {
             Section {
                 VStack(alignment: .leading){
-                    PainAreasView(symptomData: symptomData)
+//                    PainAreasView(symptomData: symptomData)
                 }
             } header: {
                 HStack {
@@ -29,7 +34,7 @@ struct RecordSymptomsScreen: View {
                 }
             }
             Section {
-                ChooseBASDAIView(symptomData: symptomData)
+//                ChooseBASDAIView(symptomData: symptomData)
             } header: {
                 HStack {
                     Text("BASDAI")
@@ -43,9 +48,19 @@ struct RecordSymptomsScreen: View {
                 Text("Notes:")
             }
             
-            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-               Text("Button")
-            })
+//            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+//               Text("Button")
+//            })
+        }.onAppear(){
+            currentCalendarData = allRecords.filter({ $0.date.startOfDay == currentDate.startOfDay}).first
+            if let existingData = currentCalendarData{}else{
+                currentCalendarData = CalendarDate(date: currentDate)
+                modelContext.container.mainContext.insert(currentCalendarData!)
+                print("\(allRecords)")
+            }
+            if let symptoms = currentCalendarData?.symptoms{}else{
+                currentCalendarData?.symptoms = Symptoms(date: currentCalendarData!)
+            }
         }
         .navigationTitle("Symptoms")
     }
