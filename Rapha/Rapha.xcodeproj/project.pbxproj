@@ -55,6 +55,7 @@
 		6B3251AD2BCD08E300CA9709 /* RecordSymptomsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSymptomsScreen.swift; sourceTree = "<group>"; };
 		6B3251AF2BCD0B2300CA9709 /* PainAreasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PainAreasView.swift; sourceTree = "<group>"; };
 		6B61C56D2BCF4BC500384863 /* AustinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AustinView.swift; sourceTree = "<group>"; };
+		6B61C56F2BCF69BD00384863 /* RaphaRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RaphaRelease.entitlements; sourceTree = "<group>"; };
 		6BAE41B52BC91B6F0027C1DB /* Rapha.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rapha.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BAE41B82BC91B6F0027C1DB /* RaphaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaphaApp.swift; sourceTree = "<group>"; };
 		6BAE41BA2BC91B6F0027C1DB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -120,6 +121,7 @@
 		6BAE41B72BC91B6F0027C1DB /* Rapha */ = {
 			isa = PBXGroup;
 			children = (
+				6B61C56F2BCF69BD00384863 /* RaphaRelease.entitlements */,
 				6BAE41ED2BC963910027C1DB /* Extensions */,
 				6BAE41E82BC91E8E0027C1DB /* View */,
 				6BAE41E72BC91E810027C1DB /* ViewModel */,
@@ -532,6 +534,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Rapha/RaphaRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Rapha/Preview Content\"";
