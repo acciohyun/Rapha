@@ -16,13 +16,11 @@ struct RecordSymptomsScreen: View {
     var currentDate: Date
     
     var body: some View {
-//        Text("\(metaData.chosenDate)")
         Text("Current date:  \(currentDate)")
         List {
             if let symptoms = currentCalendarData?.symptoms{
                 Section {
                     VStack(alignment: .leading){
-//                        PainAreasView(symptomData: currentCalendarData!.symptoms!)
                         PainAreasView(currentDate: currentDate)
                     }
                 } header: {
@@ -33,7 +31,7 @@ struct RecordSymptomsScreen: View {
                     }
                 }
                 Section {
-    //                ChooseBASDAIView(symptomData: symptomData)
+                    ChooseBASDAIView(currentDate: currentDate)
                 } header: {
                     HStack {
                         Text("BASDAI")

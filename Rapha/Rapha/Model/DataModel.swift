@@ -19,7 +19,7 @@ class CalendarDate: ObservableObject{
     @Relationship(deleteRule: .cascade, inverse: \Symptoms.date)
     @Relationship(deleteRule: .cascade, inverse: \Medication.date)
     @Relationship(deleteRule: .cascade, inverse: \LabResults.date)
-
+    
     init(date: Date){
         self.date = date
     }
@@ -30,12 +30,12 @@ class Symptoms{
     let type = "Symptoms"
     var date: CalendarDate
     var painAreas: [PainArea]?
-    var qnsBASDAI: [String : Float] = ["Q1": 0,
-                                       "Q2": 0,
-                                       "Q3": 0,
-                                       "Q4": 0,
-                                       "Q5": 0,
-                                       "Q6": 0]
+    var qnsBASDAI: [Int : Float] = [0: 0,
+                                    1: 0,
+                                    2: 0,
+                                    3: 0,
+                                    4: 0,
+                                    5: 0]
     var notes: String?
     init(date: CalendarDate){
         self.date = date

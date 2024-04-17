@@ -15,20 +15,20 @@ struct RecordsModel{
         return (sumOneToFour + sumFiveAndSix / 2) / 5
     }  
     
-    let qnsCollection = [IndivQnsBASDAI(qnsNum: "Q1", mainQns: "Level of fatigue", subQns: "Tiredness"),
-                         IndivQnsBASDAI(qnsNum: "Q2", mainQns: "Level of AS pain", subQns: "AS neck, back, or hip pain"),
-                         IndivQnsBASDAI(qnsNum: "Q3", mainQns: "Other level of pain/swelling", subQns: "In joints other than neck, back, and hips"),
-                         IndivQnsBASDAI(qnsNum: "Q4", mainQns: "Level of discomfort", subQns: "Discomfort from area tender to touch"),
-                         IndivQnsBASDAI(qnsNum: "Q5", mainQns: "Level of morning stiffness", subQns: "From the time you wake up"),
-                         IndivQnsBASDAI(qnsNum: "Q6", mainQns: "Duration of morning stiffness", subQns: "5 is one hour, 10 is two or more hours")]
+    let qnsCollection = [IndivQnsBASDAI(qnsNum: 0, mainQns: "Level of fatigue", subQns: "Tiredness"),
+                         IndivQnsBASDAI(qnsNum: 1, mainQns: "Level of AS pain", subQns: "AS neck, back, or hip pain"),
+                         IndivQnsBASDAI(qnsNum: 2, mainQns: "Other level of pain/swelling", subQns: "In joints other than neck, back, and hips"),
+                         IndivQnsBASDAI(qnsNum: 3, mainQns: "Level of discomfort", subQns: "Discomfort from area tender to touch"),
+                         IndivQnsBASDAI(qnsNum: 4, mainQns: "Level of morning stiffness", subQns: "From the time you wake up"),
+                         IndivQnsBASDAI(qnsNum: 5, mainQns: "Duration of morning stiffness", subQns: "5 is one hour, 10 is two or more hours")]
 }
 
 struct IndivQnsBASDAI: Identifiable, Hashable{
-    var id: String
+    var id: Int
     var mainQns: String
     var subQns: String
     
-    init(qnsNum: String, mainQns: String, subQns: String){
+    init(qnsNum: Int, mainQns: String, subQns: String){
         self.id = qnsNum
         self.mainQns = mainQns
         self.subQns = subQns

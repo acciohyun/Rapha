@@ -52,10 +52,7 @@ struct RecordsListView: View {
         }
         .onChange(of: currentDate){ oldValue, newValue in
             currentCalendarData = allRecords.filter({ $0.date.startOfDay == newValue.startOfDay}).first
-            print("onchange: \(currentDate)")
-            print("data: \(currentCalendarData)")
             if let currentCalendarData{
-                
             }else{
                 currentCalendarData = CalendarDate(date: currentDate)
             }
