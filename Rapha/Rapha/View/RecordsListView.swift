@@ -42,8 +42,8 @@ struct RecordsListView: View {
                                 .foregroundColor(.symptoms)
                             VStack(alignment: .leading){
                                 Text(record.rawValue)
-                                if (currentCalendarData?.symptoms) != nil{
-                                    Text("symptoms: ")
+                                if let symptoms = currentCalendarData?.symptoms{
+                                    Text("\(symptoms.painAreas?.count ?? 0) Pain areas")
                                 }
                             }
                         case .medication:
@@ -54,8 +54,8 @@ struct RecordsListView: View {
                                 .foregroundColor(.medication)
                             VStack(alignment: .leading){
                                 Text(record.rawValue)
-                                if (currentCalendarData?.medication) != nil{
-                                    Text("meds: ")
+                                if let meds = currentCalendarData?.medication{
+                                    Text(meds.amgevitaTaken ? "Amgevita taken" : "Amgevita not taken")
                                 }
                             }
                         case .labResults:
@@ -66,8 +66,8 @@ struct RecordsListView: View {
                                 .foregroundColor(.labResult)
                             VStack(alignment: .leading){
                                 Text(record.rawValue)
-                                if (currentCalendarData?.labResults) != nil{
-                                    Text("lab: ")
+                                if let lab = currentCalendarData?.labResults{
+                                    Text("ESR: \(lab.inflammation["ESR"] ?? "0"), CRP: \(lab.inflammation["CRP"] ?? "0")")
                                 }
                             }
                         }

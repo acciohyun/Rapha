@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-class CalendarDate: ObservableObject{
+class CalendarDate{
     
     @Attribute(.unique) var date: Date
     var symptoms: Symptoms?
