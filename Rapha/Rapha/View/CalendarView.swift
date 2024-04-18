@@ -39,6 +39,10 @@ struct CalendarView: UIViewRepresentable{
         uiView.reloadDecorations(forDateComponents: recordsSaved.map{Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: $0.date)}, animated: true)
     }
     
+    func updateView() {
+        calendarView?.reloadInputViews()
+    }
+    
     class Coordinator: NSObject, UICalendarViewDelegate, UICalendarSelectionSingleDateDelegate{
         
         //this is the CalendarViewDelegate
@@ -49,7 +53,6 @@ struct CalendarView: UIViewRepresentable{
         @Binding var selectedDate: Date
         
         var computedRecords: [CalendarDate]{
-//            print("savedRecords: \(savedRecords.count)")
             return savedRecords
         }
         
@@ -61,10 +64,9 @@ struct CalendarView: UIViewRepresentable{
         
         @MainActor
         func calendarView(_ calendarView: UICalendarView, decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
+            print("decorator: \(savedRecords.count)")
             let record = savedRecords.filter{$0.date.startOfDay == dateComponents.date?.startOfDay}
-//            print("B: \(savedRecords.count)")
             if record.isEmpty{return nil}
-//            print("item: \(record[0].date)")
             let renderer = ImageRenderer(content: CalendarCellRecordsView(record: record[0]))
             renderer.scale = 3
             if let uiImage = renderer.uiImage {
@@ -85,8 +87,7 @@ struct CalendarView: UIViewRepresentable{
         
         @MainActor
         func dateSelection(_ selection: UICalendarSelectionSingleDate, didSelectDate dateComponents: DateComponents?) {
-//            print("C: \(savedRecords.count)")
-//            print("C - computed records: \(savedRecords.count)")
+            print("select: \(savedRecords.count)")
             if let date = dateComponents{
                 if let selectedDate = Calendar.current.date(from: dateComponents!)?.startOfDay{
                     DispatchQueue.main.async{

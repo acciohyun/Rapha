@@ -14,17 +14,26 @@ struct CalendarScreen: View {
     @Query var allRecords: [CalendarDate]
     @State var currentDate: Date = Date()
     @State var currentCalendarData: CalendarDate?
+    @State var view: CalendarView?
     
     var body: some View {
         NavigationStack{
             VStack {
                 CalendarView(interval: DateInterval(start: .distantPast, end: .distantFuture), selectedDate: $currentDate)
+//                if let view{
+//                    view
+//                }
                 RecordsListView(currentDate: $currentDate)
             }
         }.onChange(of: allRecords){
+//            if let view{
+//                print("reload")
+//                view.updateView()
+//            }
             print("allRecords changed")
             //fired when allRecords changes
         }.onAppear(){
+            view = CalendarView(interval: DateInterval(start: .distantPast, end: .distantFuture), selectedDate: $currentDate)
             print(modelContext.sqliteCommand)
         }
     }

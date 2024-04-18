@@ -17,18 +17,22 @@ struct ChooseBASDAIView: View {
     var currentDate: Date
     @State var ans = [Int](repeating: 0, count: 10)
     
+    
     var body: some View {
         ForEach(record.qnsCollection){qns in
-            HStack {
-                VStack{
+            HStack(){
+                VStack(alignment: .leading){
                     Text(qns.mainQns)
                     Text(qns.subQns)
-                }
+                        .foregroundStyle(.subtitle)
+                        .font(.system(size: 15))
+                }.frame()
+                Spacer()
                 Picker("", selection: $ans[qns.id]) {
                     ForEach(0..<11, id: \.self) { i in
                         Text("\(i)").tag(Optional(Float(i)))
                     }
-                }.id(qns.id)
+                }.id(qns.id).frame(width: 50)
                 
                 
             }
@@ -41,7 +45,6 @@ struct ChooseBASDAIView: View {
         .onChange(of: ans){
             if let data = symptomData{
                 for i in 0..<ans.count{
-//                    print(i)
                     data.qnsBASDAI[i] = Float(ans[i])
                 }
                 symptomData?.qnsBASDAI = data.qnsBASDAI
@@ -55,8 +58,3 @@ struct ChooseBASDAIView: View {
         }
     }
 }
-
-//#Preview {
-////    RecordSymptomsScreen().environmentObject(MetaData())
-////    ChooseBASDAIView()
-//}
