@@ -33,27 +33,61 @@ struct RecordsListView: View {
             ForEach(RecordType.allCases){ record in
                 NavigationLink(value: record){
                     HStack{
-                        Image(systemName: "circle")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 10)
-                        VStack(alignment: .leading){
-                            Text(record.rawValue)
-                            switch record{
-                            case .symptoms:
+                        switch record{
+                        case .symptoms:
+                            Image(systemName: currentCalendarData?.symptoms == nil ? "circle" : "circle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 10)
+                                .foregroundColor(.symptoms)
+                            VStack(alignment: .leading){
+                                Text(record.rawValue)
                                 if (currentCalendarData?.symptoms) != nil{
                                     Text("symptoms: ")
                                 }
-                            case .medication:
+                            }
+                        case .medication:
+                            Image(systemName: currentCalendarData?.medication == nil ? "circle" : "circle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 10)
+                                .foregroundColor(.medication)
+                            VStack(alignment: .leading){
+                                Text(record.rawValue)
                                 if (currentCalendarData?.medication) != nil{
-                                    Text("medication: ")
+                                    Text("meds: ")
                                 }
-                            case .labResults:
+                            }
+                        case .labResults:
+                            Image(systemName: currentCalendarData?.labResults == nil ? "circle" : "circle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 10)
+                                .foregroundColor(.labResult)
+                            VStack(alignment: .leading){
+                                Text(record.rawValue)
                                 if (currentCalendarData?.labResults) != nil{
-                                    Text("results: ")
+                                    Text("lab: ")
                                 }
                             }
                         }
+//                        VStack(alignment: .leading){
+//                            Text(record.rawValue)
+//                            switch record{
+//                            case .symptoms:
+//                                if (currentCalendarData?.symptoms) != nil{
+//                                    Text("symptoms: ")
+//                                }
+//                            case .medication:
+//                                if (currentCalendarData?.medication) != nil{
+//                                    Text("medication: ")
+//                                }
+//                            case .labResults:
+//                                if (currentCalendarData?.labResults) != nil{
+//                                    Text("results: ")
+//                                }
+//                            }
+//                        }
                     }
                 }
             }
@@ -84,4 +118,8 @@ struct RecordsListView: View {
         medicationData = currentCalendarData?.medication
         labResultsData = currentCalendarData?.labResults
     }
+}
+
+#Preview {
+    CalendarScreen().modelContainer(for: CalendarDate.self)
 }

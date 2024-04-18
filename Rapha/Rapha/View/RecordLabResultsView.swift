@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct RecordLabResultsView: View {
+    @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var modelContext
     @State var currentCalendarData: CalendarDate?
     @Query var allRecords: [CalendarDate]
@@ -20,12 +21,6 @@ struct RecordLabResultsView: View {
         Text("Current date:  \(currentDate)")
         List {
             if (currentCalendarData?.labResults) != nil{
-                //                HStack{
-                //                    Text("Amgevita")
-                //                    Toggle(isOn: $medsTaken){
-                //
-                //                    }
-                //                }
                 HStack{
                     Text("ESR")
                     Spacer()
@@ -67,6 +62,16 @@ struct RecordLabResultsView: View {
         .onChange(of: CRP){
             if let results = currentCalendarData?.labResults{
                 results.inflammation["CRP"] = CRP
+            }
+        }
+        .toolbar{
+            Button{
+                if let data = currentCalendarData?.labResults{
+                    currentCalendarData?.labResults = nil
+                    dismiss()
+                }
+            } label:{
+                Image(systemName: "trash")
             }
         }
         .navigationTitle("Lab Results")

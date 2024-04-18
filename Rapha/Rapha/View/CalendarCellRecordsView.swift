@@ -17,21 +17,21 @@ struct CalendarCellRecordsView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 7)
-                    .foregroundColor(.red)
+                    .foregroundColor(.symptoms)
             }
             if let medication = record.medication{
                 Image(systemName: "circle.fill")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 7)
-                    .foregroundColor(.blue)
+                    .foregroundColor(.medication)
             }
             if let labResults = record.labResults{
                 Image(systemName: "circle.fill")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 7)
-                    .foregroundColor(.black)
+                    .foregroundColor(.labResult)
             }
         }.onAppear(){
             if let symptoms = record.symptoms{

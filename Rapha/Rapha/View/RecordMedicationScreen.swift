@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct RecordMedicationScreen: View {
+    @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var modelContext
     @State var currentCalendarData: CalendarDate?
     @Query var allRecords: [CalendarDate]
@@ -48,6 +49,16 @@ struct RecordMedicationScreen: View {
         .onChange(of: medsTaken){
             if let meds = currentCalendarData?.medication{
                 meds.amgevitaTaken = medsTaken
+            }
+        }
+        .toolbar{
+            Button{
+                if let data = currentCalendarData?.medication{
+                    currentCalendarData?.medication = nil
+                    dismiss()
+                }
+            } label:{
+                Image(systemName: "trash")
             }
         }
         .navigationTitle("Medication")

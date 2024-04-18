@@ -30,9 +30,9 @@ struct CalendarScreen: View {
     }
 }
 
-//#Preview {
-//    CalendarScreen().environmentObject(DummyData()).environmentObject(MetaData())
-//}
+#Preview {
+    CalendarScreen().modelContainer(for: CalendarDate.self)
+}
 
 //data persists after month change
 //data persists after exiting existing symptoms page
