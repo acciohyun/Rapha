@@ -25,7 +25,13 @@ struct PainAreasView: View {
                     .frame(height: 500)
             }.onTapGesture{ location in
                 print("Tapped at \(location)")
-                addPoint(at: location)
+                if let existingPointIndex = isExistingPoint(at: location){
+                    if let pains = symptomData?.painAreas{
+                        symptomData?.painAreas?.remove(at: existingPointIndex)
+                    }
+                }else{
+                    addPoint(at: location)
+                }
             }
             if let painAreas = symptomData?.painAreas{
                 ForEach(painAreas){ painPoint in
@@ -33,8 +39,7 @@ struct PainAreasView: View {
                         .scaledToFit()
                         .frame(width: 17)
                         .foregroundColor(.symptoms)
-                        .position(x:CGFloat(painPoint.coordinateX + 65), y: CGFloat(painPoint.coordinateY))
-                }
+                    .position(x:CGFloat(painPoint.coordinateX + 65), y: CGFloat(painPoint.coordinateY))                }
             }
         }.onAppear(){
             symptomData = allRecords.filter({ $0.date.startOfDay == currentDate.startOfDay}).first?.symptoms
@@ -45,7 +50,17 @@ struct PainAreasView: View {
         }
         .aspectRatio(2.68, contentMode: .fit)
     }
-    
+    func isExistingPoint(at location: CGPoint) -> Int?{
+        if let painAreas = symptomData?.painAreas{
+            for index in 0..<painAreas.count{
+                let painDot = painAreas[index]
+                if (Float(location.x) <= (painDot.coordinateX + 6.5) || Float(location.x) >= (painDot.coordinateX - 6.5)) && (Float(location.y) <= (painDot.coordinateY + 6.5) || Float(location.y) >= (painDot.coordinateY - 6.5)){
+                    return index
+                }
+            }
+        }
+        return nil
+    }
     func addPoint(at location: CGPoint){
         if symptomData?.painAreas != nil {
             print("added")
