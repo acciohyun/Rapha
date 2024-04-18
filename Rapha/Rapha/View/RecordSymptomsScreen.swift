@@ -10,6 +10,7 @@ import SwiftUI
 import SwiftData
 
 struct RecordSymptomsScreen: View {
+    @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var modelContext
     @State var currentCalendarData: CalendarDate?
     @Query var allRecords: [CalendarDate]
@@ -63,14 +64,16 @@ struct RecordSymptomsScreen: View {
                 print("created symptoms")
                 currentCalendarData?.symptoms = Symptoms(date: currentCalendarData!)
             }
+        }.toolbar{
+            Button{
+                if let data = currentCalendarData?.symptoms{
+                    currentCalendarData?.symptoms = nil
+                    dismiss()
+                }
+            } label:{
+                Image(systemName: "trash")
+            }
         }
         .navigationTitle("Symptoms")
-//        Button("Save"){
-//            try? modelContext.save()
-//        }
     }
 }
-
-//#Preview {
-//    RecordSymptomsScreen().environmentObject(MetaData())
-//}

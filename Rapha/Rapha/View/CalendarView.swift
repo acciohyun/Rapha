@@ -87,9 +87,11 @@ struct CalendarView: UIViewRepresentable{
         func dateSelection(_ selection: UICalendarSelectionSingleDate, didSelectDate dateComponents: DateComponents?) {
 //            print("C: \(savedRecords.count)")
 //            print("C - computed records: \(savedRecords.count)")
-            if let selectedDate = Calendar.current.date(from: dateComponents!)?.startOfDay{
-                DispatchQueue.main.async{
-                    self.selectedDate = selectedDate
+            if let date = dateComponents{
+                if let selectedDate = Calendar.current.date(from: dateComponents!)?.startOfDay{
+                    DispatchQueue.main.async{
+                        self.selectedDate = selectedDate
+                    }
                 }
             }
         }

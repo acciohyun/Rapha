@@ -58,15 +58,10 @@ struct RecordsListView: View {
                 }
             }
         }
-        .onChange(of: currentDate){ oldValue, newValue in
-            currentCalendarData = allRecords.filter({ $0.date.startOfDay == newValue.startOfDay}).first
-            if currentCalendarData != nil{
-            }else{
-                currentCalendarData = CalendarDate(date: currentDate)
-            }
-            symptomsData = currentCalendarData?.symptoms
-            medicationData = currentCalendarData?.medication
-            labResultsData = currentCalendarData?.labResults
+        .onChange(of: currentDate){
+            updateView()
+        }.onAppear(){
+            updateView()
         }
         .navigationDestination(for: RecordType.self){ record in
             switch record{
@@ -78,5 +73,15 @@ struct RecordsListView: View {
                 RecordLabResultsView(currentDate: currentDate)
             }
         }
+    }
+    func updateView(){
+        currentCalendarData = allRecords.filter({ $0.date.startOfDay == currentDate.startOfDay}).first
+        if currentCalendarData != nil{
+        }else{
+            currentCalendarData = CalendarDate(date: currentDate)
+        }
+        symptomsData = currentCalendarData?.symptoms
+        medicationData = currentCalendarData?.medication
+        labResultsData = currentCalendarData?.labResults
     }
 }
