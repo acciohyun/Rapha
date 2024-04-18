@@ -31,8 +31,8 @@ struct PainAreasView: View {
                 ForEach(painAreas){ painPoint in
                     Circle()
                         .scaledToFit()
-                        .frame(width: 15)
-                        .foregroundColor(.red)
+                        .frame(width: 17)
+                        .foregroundColor(.symptoms)
                         .position(x:CGFloat(painPoint.coordinateX + 65), y: CGFloat(painPoint.coordinateY))
                 }
             }

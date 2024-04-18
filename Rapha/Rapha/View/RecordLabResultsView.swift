@@ -18,7 +18,7 @@ struct RecordLabResultsView: View {
     @State var CRP: String = "0"
     
     var body: some View {
-        Text("Current date:  \(currentDate)")
+        Text("\(currentDate.simplifiedDate)")
         List {
             if (currentCalendarData?.labResults) != nil{
                 HStack{

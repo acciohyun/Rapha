@@ -17,7 +17,7 @@ struct RecordSymptomsScreen: View {
     var currentDate: Date
     
     var body: some View {
-        Text("Current date:  \(currentDate)")
+        Text("\(currentDate.simplifiedDate)")
         List {
             if let symptoms = currentCalendarData?.symptoms{
                 Section {
@@ -74,6 +74,6 @@ struct RecordSymptomsScreen: View {
                 Image(systemName: "trash")
             }
         }
-        .navigationTitle("Symptoms")
+        .navigationTitle("Symptoms \n \(currentDate.simplifiedDate)")
     }
 }

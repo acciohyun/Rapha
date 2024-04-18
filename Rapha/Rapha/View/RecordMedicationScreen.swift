@@ -17,7 +17,7 @@ struct RecordMedicationScreen: View {
     @State var medsTaken = false
     
     var body: some View {
-        Text("Current date:  \(currentDate)")
+        Text("\(currentDate.simplifiedDate)")
         List {
             if (currentCalendarData?.medication) != nil{
                 HStack{
