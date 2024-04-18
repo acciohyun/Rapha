@@ -77,3 +77,7 @@ struct RecordSymptomsScreen: View {
         .navigationTitle("Symptoms \n \(currentDate.simplifiedDate)")
     }
 }
+
+//#Preview {
+//    RecordSymptomsScreen(currentDate: Date())
+//}

@@ -44,8 +44,10 @@ struct RecordsListView: View {
                                 Text(record.rawValue)
                                 if let symptoms = currentCalendarData?.symptoms{
                                     Text("\(symptoms.painAreas?.count ?? 0) Pain areas")
+                                        .foregroundStyle(.subtitle)
+                                        .font(.system(size: 15))
                                 }
-                            }
+                            }.padding(.leading, 7)
                         case .medication:
                             Image(systemName: currentCalendarData?.medication == nil ? "circle" : "circle.fill")
                                 .resizable()
@@ -56,8 +58,10 @@ struct RecordsListView: View {
                                 Text(record.rawValue)
                                 if let meds = currentCalendarData?.medication{
                                     Text(meds.amgevitaTaken ? "Amgevita taken" : "Amgevita not taken")
+                                        .foregroundStyle(.subtitle)
+                                        .font(.system(size: 15))
                                 }
-                            }
+                            }.padding(.leading, 7)
                         case .labResults:
                             Image(systemName: currentCalendarData?.labResults == nil ? "circle" : "circle.fill")
                                 .resizable()
@@ -68,26 +72,11 @@ struct RecordsListView: View {
                                 Text(record.rawValue)
                                 if let lab = currentCalendarData?.labResults{
                                     Text("ESR: \(lab.inflammation["ESR"] ?? "0"), CRP: \(lab.inflammation["CRP"] ?? "0")")
+                                        .foregroundStyle(.subtitle)
+                                        .font(.system(size: 15))
                                 }
-                            }
+                            }.padding(.leading, 7)
                         }
-//                        VStack(alignment: .leading){
-//                            Text(record.rawValue)
-//                            switch record{
-//                            case .symptoms:
-//                                if (currentCalendarData?.symptoms) != nil{
-//                                    Text("symptoms: ")
-//                                }
-//                            case .medication:
-//                                if (currentCalendarData?.medication) != nil{
-//                                    Text("medication: ")
-//                                }
-//                            case .labResults:
-//                                if (currentCalendarData?.labResults) != nil{
-//                                    Text("results: ")
-//                                }
-//                            }
-//                        }
                     }
                 }
             }
