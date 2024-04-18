@@ -23,7 +23,6 @@ struct RecordMedicationScreen: View {
                 HStack{
                     Text("Amgevita")
                     Toggle(isOn: $medsTaken){
-                        
                     }
                 }
             }
@@ -62,13 +61,6 @@ struct RecordMedicationScreen: View {
             }
         }
         .navigationTitle("Medication")
-//        Button("Save"){
-//            try? modelContext.save()
-//        }
     }
 }
-//
-//#Preview {
-//    RecordMedicationView()
-//}
 

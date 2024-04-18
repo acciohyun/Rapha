@@ -14,7 +14,23 @@ struct RecordSymptomsScreen: View {
     @Environment(\.modelContext) private var modelContext
     @State var currentCalendarData: CalendarDate?
     @Query var allRecords: [CalendarDate]
+    @State var notes: String = ""
     var currentDate: Date
+    var calculatedBASDAI: String{
+        var formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 1
+        if let qnsAns = currentCalendarData?.symptoms?.qnsBASDAI{
+            let sumOneToFour: Float = (qnsAns[0] ?? 0) + (qnsAns[1] ?? 0) + (qnsAns[2] ?? 0) + (qnsAns[3] ?? 0)
+            let sumFiveAndSix: Float = (qnsAns[4] ?? 0) + (qnsAns[5] ?? 0)
+            let result = (sumOneToFour + sumFiveAndSix / 2) / 5
+            if let resultStr = formatter.string(for: result){
+                return resultStr
+            }else{
+                return "0"
+            }
+        }
+        return "0"
+    }
     
     var body: some View {
         Text("\(currentDate.simplifiedDate)")
@@ -27,8 +43,22 @@ struct RecordSymptomsScreen: View {
                 } header: {
                     HStack {
                         Text("Pain areas")
+                            .foregroundStyle(.sectionTitle)
+                            .fontWeight(.semibold)
+                            .font(.system(size: 20))
+                            .textCase(nil)
+                            .offset(x: -15)
                         Spacer()
-                        Text("2")
+                        ZStack{
+                            Circle()
+                                .scaledToFit()
+                                .frame(width: 37)
+                                .foregroundColor(.accent)
+                            Text("\(symptoms.painAreas?.count ?? 0)")
+                                .foregroundStyle(.white)
+                                .font(.system(size: 16))
+                                .fontWeight(.bold)
+                        }.offset(x: 15)
                     }
                 }
                 Section {
@@ -36,14 +66,32 @@ struct RecordSymptomsScreen: View {
                 } header: {
                     HStack {
                         Text("BASDAI")
+                            .foregroundStyle(.sectionTitle)
+                            .fontWeight(.semibold)
+                            .font(.system(size: 20))
+                            .offset(x: -15)
                         Spacer()
-                        Text("2")
+                        ZStack{
+                            Circle()
+                                .scaledToFit()
+                                .frame(width: 37)
+                                .foregroundColor(.accent)
+                            Text("\(calculatedBASDAI)")
+                                .foregroundStyle(.white)
+                                .font(.system(size: 16))
+                                .fontWeight(.bold)
+                        }.offset(x: 15)
                     }
                 }
                 Section{
-                    //textinput
+                    TextField("Enter any notes", text: $notes, axis: .vertical).lineLimit(5...10)
                 }header:{
-                    Text("Notes:")
+                    Text("Notes")
+                        .foregroundStyle(.sectionTitle)
+                        .fontWeight(.semibold)
+                        .textCase(nil)
+                        .font(.system(size: 20))
+                        .offset(x: -15)
                 }
             }
             
@@ -64,7 +112,14 @@ struct RecordSymptomsScreen: View {
                 print("created symptoms")
                 currentCalendarData?.symptoms = Symptoms(date: currentCalendarData!)
             }
-        }.toolbar{
+            notes = currentCalendarData?.symptoms?.notes ?? ""
+        }
+        .onChange(of: notes){
+            if currentCalendarData?.symptoms != nil{
+                currentCalendarData?.symptoms?.notes = notes
+            }
+        }
+        .toolbar{
             Button{
                 if let data = currentCalendarData?.symptoms{
                     currentCalendarData?.symptoms = nil
@@ -74,8 +129,16 @@ struct RecordSymptomsScreen: View {
                 Image(systemName: "trash")
             }
         }
-        .navigationTitle("Symptoms \n \(currentDate.simplifiedDate)")
+        .navigationTitle("Symptoms")
     }
+//    mutating func calculatedBASDAI() -> Float{
+//        if let qnsAns = currentCalendarData?.symptoms?.qnsBASDAI{
+//            let sumOneToFour: Float = (qnsAns[0] ?? 0) + (qnsAns[1] ?? 0) + (qnsAns[2] ?? 0) + (qnsAns[3] ?? 0)
+//            let sumFiveAndSix: Float = (qnsAns[4] ?? 0) + (qnsAns[5] ?? 0)
+//            return (sumOneToFour + sumFiveAndSix / 2) / 5
+//        }
+//        return Float(0)
+//    }
 }
 
 //#Preview {

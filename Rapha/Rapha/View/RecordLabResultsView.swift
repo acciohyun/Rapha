@@ -21,17 +21,25 @@ struct RecordLabResultsView: View {
         Text("\(currentDate.simplifiedDate)")
         List {
             if (currentCalendarData?.labResults) != nil{
-                HStack{
-                    Text("ESR")
-                    Spacer()
-                    TextField("ESR", text: $ESR)
+                Section{
+                    HStack{
+                        Text("ESR")
+                        Spacer()
+                        TextField("ESR", text: $ESR)
+                    }
+                    HStack{
+                        Text("CRP")
+                        Spacer()
+                        TextField("CRP", text: $CRP)
+                    }
+                } header:{
+                    Text("Inflammation")
+                        .foregroundStyle(.sectionTitle)
+                        .fontWeight(.semibold)
+                        .font(.system(size: 20))
+                        .textCase(nil)
+                        .offset(x: -15)
                 }
-                HStack{
-                    Text("CRP")
-                    Spacer()
-                    TextField("CRP", text: $CRP)
-                }
-                
             }
         }.onAppear(){
             currentCalendarData = allRecords.filter({ $0.date.startOfDay == currentDate.startOfDay}).first
