@@ -37,7 +37,6 @@ struct CalendarView: UIViewRepresentable{
         print("Update")
         print("A: \(recordsSaved.count)")
         uiView.reloadDecorations(forDateComponents: recordsSaved.map{Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: $0.date)}, animated: true)
-//        context.coordinator.calendarView(calendarView ?? UICalendarView(), didChangeVisibleDateComponentsFrom: Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: selectedDate))
     }
     
     class Coordinator: NSObject, UICalendarViewDelegate, UICalendarSelectionSingleDateDelegate{
@@ -50,7 +49,7 @@ struct CalendarView: UIViewRepresentable{
         @Binding var selectedDate: Date
         
         var computedRecords: [CalendarDate]{
-            print("savedRecords: \(savedRecords.count)")
+//            print("savedRecords: \(savedRecords.count)")
             return savedRecords
         }
         
@@ -63,9 +62,9 @@ struct CalendarView: UIViewRepresentable{
         @MainActor
         func calendarView(_ calendarView: UICalendarView, decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
             let record = savedRecords.filter{$0.date.startOfDay == dateComponents.date?.startOfDay}
-            print("B: \(savedRecords.count)")
+//            print("B: \(savedRecords.count)")
             if record.isEmpty{return nil}
-            print("item: \(record[0].date)")
+//            print("item: \(record[0].date)")
             let renderer = ImageRenderer(content: CalendarCellRecordsView(record: record[0]))
             renderer.scale = 3
             if let uiImage = renderer.uiImage {
@@ -86,8 +85,8 @@ struct CalendarView: UIViewRepresentable{
         
         @MainActor
         func dateSelection(_ selection: UICalendarSelectionSingleDate, didSelectDate dateComponents: DateComponents?) {
-            print("C: \(savedRecords.count)")
-            print("C - computed records: \(savedRecords.count)")
+//            print("C: \(savedRecords.count)")
+//            print("C - computed records: \(savedRecords.count)")
             if let selectedDate = Calendar.current.date(from: dateComponents!)?.startOfDay{
                 DispatchQueue.main.async{
                     self.selectedDate = selectedDate

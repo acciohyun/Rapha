@@ -24,7 +24,8 @@ struct CalendarScreen: View {
         }.onChange(of: allRecords){
             print("allRecords changed")
             //fired when allRecords changes
-            
+        }.onAppear(){
+            print(modelContext.sqliteCommand)
         }
     }
 }

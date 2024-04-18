@@ -41,7 +41,7 @@ struct RaphaApp: App {
             newDummyEvent1.symptoms = newDummySymp
             newDummyEvent1.labResults = newDummyLab
             container.mainContext.insert(newDummyEvent1)
-            print("dummy")
+            try? container.mainContext.save()
             return container
         } catch {
             fatalError("Failed to create container")
@@ -51,7 +51,6 @@ struct RaphaApp: App {
     var body: some Scene {
         WindowGroup {
             CalendarScreen().environmentObject(RecordsModel())
-//                .environmentObject(DummyData()).environmentObject(MetaData())
-        }.modelContainer(previewContainer)
+        }.modelContainer(for: CalendarDate.self)
     }
 }
