@@ -86,3 +86,7 @@ class CategoryOfRecord: Identifiable{
         self.name = name
     }
 }
+
+class RecordCopy: ObservableObject{
+    @Published var allRecords = [CalendarDate]()
+}

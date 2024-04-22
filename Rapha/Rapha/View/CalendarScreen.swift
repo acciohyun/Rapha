@@ -15,25 +15,31 @@ struct CalendarScreen: View {
     @State var currentDate: Date = Date()
     @State var currentCalendarData: CalendarDate?
     @State var view: CalendarView?
+    @State var recordCopyClass = RecordCopy()
     
     var body: some View {
         NavigationStack{
             VStack {
-                CalendarView(interval: DateInterval(start: .distantPast, end: .distantFuture), selectedDate: $currentDate)
-//                if let view{
-//                    view
-//                }
+                if let view{
+                    view
+                }
+//                CalendarView(interval: DateInterval(start: .distantPast, end: .distantFuture), selectedDate: $currentDate, allRecordsCopy: $recordCopyClass.allRecords)
                 RecordsListView(currentDate: $currentDate)
             }
         }.onChange(of: allRecords){
-//            if let view{
-//                print("reload")
-//                view.updateView()
-//            }
-            print("allRecords changed")
-            //fired when allRecords changes
+            recordCopyClass.allRecords = allRecords
+            do{
+                try modelContext.save()
+            }catch{
+                print("cannot save")
+            }
+            if let view{
+                print("reload")
+                view.updateView()
+            }
         }.onAppear(){
-            view = CalendarView(interval: DateInterval(start: .distantPast, end: .distantFuture), selectedDate: $currentDate)
+            recordCopyClass.allRecords = allRecords
+            view = CalendarView(interval: DateInterval(start: .distantPast, end: .distantFuture), selectedDate: $currentDate, recordCopyClass: $recordCopyClass)
             print(modelContext.sqliteCommand)
         }
     }
@@ -43,6 +49,5 @@ struct CalendarScreen: View {
     CalendarScreen().modelContainer(for: CalendarDate.self)
 }
 
-//data persists after month change
-//data persists after exiting existing symptoms page
-// data is lost after existing existing medicine page
+// To solve the reload issue, create a state variable array of the month's data
+// send in this state variable as binding to CalendarView

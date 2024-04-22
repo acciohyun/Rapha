@@ -15,6 +15,7 @@ struct CalendarView: UIViewRepresentable{
     @Query var recordsSaved: [CalendarDate]
     @Binding var selectedDate: Date
     @State var calendarView: UICalendarView?
+    @Binding var recordCopyClass: RecordCopy
     
     func makeUIView(context: Context) -> UICalendarView {
         let view = UICalendarView()
@@ -30,13 +31,15 @@ struct CalendarView: UIViewRepresentable{
         return view
     }
     func makeCoordinator() -> Coordinator {
-        Coordinator(parent: self, savedRecords: Binding(get: {recordsSaved}, set: {_ in }), selectedDate: $selectedDate)
+//        Coordinator(parent: self, savedRecords: Binding(get: {recordsSaved}, set: {_ in }), selectedDate: $selectedDate)
+        Coordinator(parent: self, savedRecords: $recordCopyClass, selectedDate: $selectedDate)
     }
     
     func updateUIView(_ uiView: UICalendarView, context: Context) {
         print("Update")
         print("A: \(recordsSaved.count)")
-        uiView.reloadDecorations(forDateComponents: recordsSaved.map{Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: $0.date)}, animated: true)
+//        uiView.reloadDecorations(forDateComponents: recordsSaved.map{Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: $0.date)}, animated: true)
+        uiView.reloadDecorations(forDateComponents: recordCopyClass.allRecords.map{Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: $0.date)}, animated: true)
     }
     
     func updateView() {
@@ -47,25 +50,22 @@ struct CalendarView: UIViewRepresentable{
         
         //this is the CalendarViewDelegate
         var parent: CalendarView
-        @Binding var savedRecords: [CalendarDate]
+        @Binding var savedRecordsCopy: RecordCopy
         private var filteredRecords: [CalendarDate]?
         let calculations = RecordsModel()
         @Binding var selectedDate: Date
         
-        var computedRecords: [CalendarDate]{
-            return savedRecords
-        }
         
-        init(parent: CalendarView, savedRecords: Binding<[CalendarDate]>, selectedDate: Binding<Date>) {
+        init(parent: CalendarView, savedRecords: Binding<RecordCopy>, selectedDate: Binding<Date>) {
             self.parent = parent
-            self._savedRecords = savedRecords
+            self._savedRecordsCopy = savedRecords
             self._selectedDate = selectedDate
         }
         
         @MainActor
         func calendarView(_ calendarView: UICalendarView, decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
-            print("decorator: \(savedRecords.count)")
-            let record = savedRecords.filter{$0.date.startOfDay == dateComponents.date?.startOfDay}
+            print("decorator: \(savedRecordsCopy.allRecords.count)")
+            let record = savedRecordsCopy.allRecords.filter{$0.date.startOfDay == dateComponents.date?.startOfDay}
             if record.isEmpty{return nil}
             let renderer = ImageRenderer(content: CalendarCellRecordsView(record: record[0]))
             renderer.scale = 3
@@ -85,9 +85,9 @@ struct CalendarView: UIViewRepresentable{
             return true
         }
         
-        @MainActor
+//        @MainActor
         func dateSelection(_ selection: UICalendarSelectionSingleDate, didSelectDate dateComponents: DateComponents?) {
-            print("select: \(savedRecords.count)")
+            print("select: \(savedRecordsCopy.allRecords.count)")
             if let date = dateComponents{
                 if let selectedDate = Calendar.current.date(from: dateComponents!)?.startOfDay{
                     DispatchQueue.main.async{
@@ -96,6 +96,5 @@ struct CalendarView: UIViewRepresentable{
                 }
             }
         }
-        
     }
 }

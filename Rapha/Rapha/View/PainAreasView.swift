@@ -54,11 +54,18 @@ struct PainAreasView: View {
         if let painAreas = symptomData?.painAreas{
             for index in 0..<painAreas.count{
                 let painDot = painAreas[index]
-                if (Float(location.x) <= (painDot.coordinateX + 6.5) || Float(location.x) >= (painDot.coordinateX - 6.5)) && (Float(location.y) <= (painDot.coordinateY + 6.5) || Float(location.y) >= (painDot.coordinateY - 6.5)){
-                    return index
+                let maxX = painDot.coordinateX + 6.5
+                let maxY = painDot.coordinateY + 6.5
+                let minX = painDot.coordinateX - 6.5
+                let minY = painDot.coordinateY - 6.5
+                if Float(location.x) <= maxX && Float(location.x) >= minX{
+                    if Float(location.y) <= maxY && Float(location.y) >= minY{
+                        return index
+                    }
                 }
             }
         }
+        print("here")
         return nil
     }
     func addPoint(at location: CGPoint){
