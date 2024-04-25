@@ -19,7 +19,7 @@ struct PainAreasView: View {
         ZStack(alignment: .center){
             Color.clear
             HStack {
-                Image("Skeleton")
+                Image("Skeleton Final")
                     .resizable()
                     .scaledToFit()
                     .frame(height: 500)
@@ -39,7 +39,7 @@ struct PainAreasView: View {
                         .scaledToFit()
                         .frame(width: 17)
                         .foregroundColor(.symptoms)
-                    .position(x:CGFloat(painPoint.coordinateX + 65), y: CGFloat(painPoint.coordinateY))                }
+                    .position(x:CGFloat(painPoint.coordinateX + 30), y: CGFloat(painPoint.coordinateY))                }
             }
         }.onAppear(){
             symptomData = allRecords.filter({ $0.date.startOfDay == currentDate.startOfDay}).first?.symptoms

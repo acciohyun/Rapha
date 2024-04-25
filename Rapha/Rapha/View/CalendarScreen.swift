@@ -23,7 +23,6 @@ struct CalendarScreen: View {
                 if let view{
                     view
                 }
-//                CalendarView(interval: DateInterval(start: .distantPast, end: .distantFuture), selectedDate: $currentDate, allRecordsCopy: $recordCopyClass.allRecords)
                 RecordsListView(currentDate: $currentDate)
             }
         }.onChange(of: allRecords){
@@ -31,10 +30,9 @@ struct CalendarScreen: View {
             do{
                 try modelContext.save()
             }catch{
-                print("cannot save")
+                print("Error: Cannot save")
             }
             if let view{
-                print("reload")
                 view.updateView()
             }
         }.onAppear(){
@@ -49,5 +47,3 @@ struct CalendarScreen: View {
     CalendarScreen().modelContainer(for: CalendarDate.self)
 }
 
-// To solve the reload issue, create a state variable array of the month's data
-// send in this state variable as binding to CalendarView

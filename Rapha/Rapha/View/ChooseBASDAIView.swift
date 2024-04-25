@@ -32,7 +32,7 @@ struct ChooseBASDAIView: View {
                     ForEach(0..<11, id: \.self) { i in
                         Text("\(i)").tag(Optional(Float(i)))
                     }
-                }.id(qns.id).frame(width: 50)
+                }.id(qns.id).frame(width: 60)
                 
                 
             }

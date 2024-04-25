@@ -60,7 +60,7 @@ struct RecordSymptomsScreen: View {
                                 .fontWeight(.bold)
                         }.offset(x: 15)
                     }
-                }
+                }.listRowBackground(Color.painBackground)
                 Section {
                     ChooseBASDAIView(currentDate: currentDate)
                 } header: {

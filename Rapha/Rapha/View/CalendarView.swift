@@ -31,14 +31,14 @@ struct CalendarView: UIViewRepresentable{
         return view
     }
     func makeCoordinator() -> Coordinator {
-//        Coordinator(parent: self, savedRecords: Binding(get: {recordsSaved}, set: {_ in }), selectedDate: $selectedDate)
         Coordinator(parent: self, savedRecords: $recordCopyClass, selectedDate: $selectedDate)
     }
     
     func updateUIView(_ uiView: UICalendarView, context: Context) {
         print("Update")
         print("A: \(recordsSaved.count)")
-//        uiView.reloadDecorations(forDateComponents: recordsSaved.map{Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: $0.date)}, animated: true)
+        uiView.reloadInputViews()
+        uiView.invalidateIntrinsicContentSize()
         uiView.reloadDecorations(forDateComponents: recordCopyClass.allRecords.map{Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: $0.date)}, animated: true)
     }
     
@@ -85,7 +85,7 @@ struct CalendarView: UIViewRepresentable{
             return true
         }
         
-//        @MainActor
+        @MainActor
         func dateSelection(_ selection: UICalendarSelectionSingleDate, didSelectDate dateComponents: DateComponents?) {
             print("select: \(savedRecordsCopy.allRecords.count)")
             if let date = dateComponents{
