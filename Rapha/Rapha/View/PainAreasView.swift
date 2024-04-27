@@ -36,10 +36,12 @@ struct PainAreasView: View {
             if let painAreas = symptomData?.painAreas{
                 ForEach(painAreas){ painPoint in
                     Circle()
+                        .fill(.opacity(0.3))
+                        .stroke(.symptoms, lineWidth: 5)
                         .scaledToFit()
-                        .frame(width: 17)
+                        .frame(width: 30)
                         .foregroundColor(.symptoms)
-                    .position(x:CGFloat(painPoint.coordinateX + 30), y: CGFloat(painPoint.coordinateY))                }
+                    .position(x:CGFloat(painPoint.coordinateX + 33), y: CGFloat(painPoint.coordinateY + 3))                }
             }
         }.onAppear(){
             symptomData = allRecords.filter({ $0.date.startOfDay == currentDate.startOfDay}).first?.symptoms
@@ -54,10 +56,10 @@ struct PainAreasView: View {
         if let painAreas = symptomData?.painAreas{
             for index in 0..<painAreas.count{
                 let painDot = painAreas[index]
-                let maxX = painDot.coordinateX + 6.5
-                let maxY = painDot.coordinateY + 6.5
-                let minX = painDot.coordinateX - 6.5
-                let minY = painDot.coordinateY - 6.5
+                let maxX = painDot.coordinateX + 25
+                let maxY = painDot.coordinateY + 25
+                let minX = painDot.coordinateX - 25
+                let minY = painDot.coordinateY - 25
                 if Float(location.x) <= maxX && Float(location.x) >= minX{
                     if Float(location.y) <= maxY && Float(location.y) >= minY{
                         return index
