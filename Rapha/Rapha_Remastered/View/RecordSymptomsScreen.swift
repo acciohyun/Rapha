@@ -107,16 +107,12 @@ struct RecordSymptomsScreen: View {
                 currentCalendarData = CalendarDate(date: currentDate)
                 modelContext.container.mainContext.insert(currentCalendarData!)
                 do {
-                    print("Saved")
                     try modelContext.save()
-                    //                    try modelContext.container.mainContext.save()
                 }catch{
                     print("not saved: error")
                 }
-                print("\(allRecords)")
             }
             if let symptoms = currentCalendarData?.symptoms{}else{
-                print("created symptoms")
                 currentCalendarData?.symptoms = Symptoms(date: currentCalendarData!)
             }
             notes = currentCalendarData?.symptoms?.notes ?? ""
@@ -146,16 +142,5 @@ struct RecordSymptomsScreen: View {
         }
         .navigationTitle("Symptoms")
     }
-    //    mutating func calculatedBASDAI() -> Float{
-    //        if let qnsAns = currentCalendarData?.symptoms?.qnsBASDAI{
-    //            let sumOneToFour: Float = (qnsAns[0] ?? 0) + (qnsAns[1] ?? 0) + (qnsAns[2] ?? 0) + (qnsAns[3] ?? 0)
-    //            let sumFiveAndSix: Float = (qnsAns[4] ?? 0) + (qnsAns[5] ?? 0)
-    //            return (sumOneToFour + sumFiveAndSix / 2) / 5
-    //        }
-    //        return Float(0)
-    //    }
 }
 
-//#Preview {
-//    RecordSymptomsScreen(currentDate: Date())
-//}

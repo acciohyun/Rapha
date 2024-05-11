@@ -52,10 +52,8 @@ struct RecordLabResultsScreen: View {
                 }catch{
                     print("not saved: error")
                 }
-                print("\(allRecords)")
             }
             if (currentCalendarData?.labResults) == nil {
-                print("created labResults")
                 currentCalendarData?.labResults = LabResults(date: currentCalendarData!)
             }
             if let orgValue = currentCalendarData?.labResults?.inflammation{
@@ -94,7 +92,3 @@ struct RecordLabResultsScreen: View {
         .navigationTitle("Lab Results")
     }
 }
-
-//#Preview {
-//    RecordLabResultsView()
-//}
