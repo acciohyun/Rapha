@@ -15,6 +15,8 @@ struct RecordSymptomsScreen: View {
     @State var currentCalendarData: CalendarDate?
     @Query var allRecords: [CalendarDate]
     @State var notes: String = ""
+    @State var showingAlert = false
+    
     var currentDate: Date
     var calculatedBASDAI: String{
         var formatter = NumberFormatter()
@@ -107,7 +109,7 @@ struct RecordSymptomsScreen: View {
                 do {
                     print("Saved")
                     try modelContext.save()
-//                    try modelContext.container.mainContext.save()
+                    //                    try modelContext.container.mainContext.save()
                 }catch{
                     print("not saved: error")
                 }
@@ -126,13 +128,21 @@ struct RecordSymptomsScreen: View {
         }
         .toolbar{
             Button{
+                showingAlert = true
+            } label:{
+                Image(systemName: "trash")
+            }
+        }
+        .alert("Delete record", isPresented: $showingAlert) {
+            Button("Delete", role: .destructive) {
                 if let data = currentCalendarData?.symptoms{
                     currentCalendarData?.symptoms = nil
                     dismiss()
                 }
-            } label:{
-                Image(systemName: "trash")
             }
+            Button("Cancel", role: .cancel) { }
+        } message: {
+            Text("Once you delete this record, it cannot be retrieved again.")
         }
         .navigationTitle("Symptoms")
     }

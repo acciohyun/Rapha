@@ -15,6 +15,7 @@ struct RecordMedicationScreen: View {
     @Query var allRecords: [CalendarDate]
     var currentDate: Date
     @State var medsTaken = false
+    @State var showingAlert = false
     
     var body: some View {
         Text("\(currentDate.simplifiedDate)")
@@ -52,13 +53,21 @@ struct RecordMedicationScreen: View {
         }
         .toolbar{
             Button{
+                showingAlert = true
+            } label:{
+                Image(systemName: "trash")
+            }
+        }
+        .alert("Delete record", isPresented: $showingAlert) {
+            Button("Delete", role: .destructive) {
                 if let data = currentCalendarData?.medication{
                     currentCalendarData?.medication = nil
                     dismiss()
                 }
-            } label:{
-                Image(systemName: "trash")
             }
+            Button("Cancel", role: .cancel) { }
+        } message: {
+            Text("Once you delete this record, it cannot be retrieved again.")
         }
         .navigationTitle("Medication")
     }
