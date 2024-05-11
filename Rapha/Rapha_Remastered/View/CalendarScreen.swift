@@ -14,17 +14,20 @@ struct CalendarScreen: View {
     @Query var allRecords: [CalendarDate]
     @State var currentDate: Date = Date()
     @State var currentCalendarData: CalendarDate?
-    @State var view: CalendarView?
+//    @State var view: CalendarView?
     @State var recordCopyClass = RecordCopy()
     
     var body: some View {
         NavigationStack{
             VStack {
-                if let view{
-                    view
-                }
+                CalendarView(interval: DateInterval(start: .distantPast, end: .now), selectedDate: $currentDate, recordCopyClass: $recordCopyClass)
                 RecordsListView(currentDate: $currentDate)
             }
+//            .toolbar{
+//                Button("Today"){
+////                    currentDate = Date()
+//                }
+//            }
         }.onChange(of: allRecords){
             recordCopyClass.allRecords = allRecords
             do{
@@ -32,18 +35,9 @@ struct CalendarScreen: View {
             }catch{
                 print("Error: Cannot save")
             }
-            if let view{
-                view.updateView()
-            }
         }.onAppear(){
             recordCopyClass.allRecords = allRecords
-            view = CalendarView(interval: DateInterval(start: .distantPast, end: .distantFuture), selectedDate: $currentDate, recordCopyClass: $recordCopyClass)
-            print(modelContext.sqliteCommand)
         }
     }
-}
-
-#Preview {
-    CalendarScreen().modelContainer(for: CalendarDate.self)
 }
 
