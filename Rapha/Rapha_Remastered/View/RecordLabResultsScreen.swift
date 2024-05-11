@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct RecordLabResultsView: View {
+struct RecordLabResultsScreen: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var modelContext
     @State var currentCalendarData: CalendarDate?

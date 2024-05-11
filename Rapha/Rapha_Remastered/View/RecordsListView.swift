@@ -109,7 +109,7 @@ struct RecordsListView: View {
             case .medication:
                 RecordMedicationScreen(currentDate: currentDate)
             case .labResults:
-                RecordLabResultsView(currentDate: currentDate)
+                RecordLabResultsScreen(currentDate: currentDate)
             }
         }
     }

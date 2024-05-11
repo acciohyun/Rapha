@@ -23,7 +23,7 @@
 		6B0019722BDEA3D800ED923D /* PainAreasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0019712BDEA3D800ED923D /* PainAreasView.swift */; };
 		6B0019742BDEA3EA00ED923D /* ChooseBASDAIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0019732BDEA3EA00ED923D /* ChooseBASDAIView.swift */; };
 		6B0019762BDEA40000ED923D /* RecordMedicationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0019752BDEA40000ED923D /* RecordMedicationScreen.swift */; };
-		6B0019782BDEA40F00ED923D /* RecordLabResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0019772BDEA40F00ED923D /* RecordLabResultsView.swift */; };
+		6B0019782BDEA40F00ED923D /* RecordLabResultsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0019772BDEA40F00ED923D /* RecordLabResultsScreen.swift */; };
 		6B00197A2BDEA42400ED923D /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0019792BDEA42400ED923D /* DateExtension.swift */; };
 		6B00197C2BDEA43400ED923D /* ModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B00197B2BDEA43400ED923D /* ModelExtension.swift */; };
 /* End PBXBuildFile section */
@@ -65,7 +65,7 @@
 		6B0019712BDEA3D800ED923D /* PainAreasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PainAreasView.swift; sourceTree = "<group>"; };
 		6B0019732BDEA3EA00ED923D /* ChooseBASDAIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseBASDAIView.swift; sourceTree = "<group>"; };
 		6B0019752BDEA40000ED923D /* RecordMedicationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordMedicationScreen.swift; sourceTree = "<group>"; };
-		6B0019772BDEA40F00ED923D /* RecordLabResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordLabResultsView.swift; sourceTree = "<group>"; };
+		6B0019772BDEA40F00ED923D /* RecordLabResultsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordLabResultsScreen.swift; sourceTree = "<group>"; };
 		6B0019792BDEA42400ED923D /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		6B00197B2BDEA43400ED923D /* ModelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -157,15 +157,15 @@
 		6B00195D2BDEA30B00ED923D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				6B0019672BDEA37F00ED923D /* CalendarView.swift */,
 				6B0019692BDEA39000ED923D /* CalendarScreen.swift */,
+				6B00196F2BDEA3C800ED923D /* RecordSymptomsScreen.swift */,
+				6B0019752BDEA40000ED923D /* RecordMedicationScreen.swift */,
+				6B0019772BDEA40F00ED923D /* RecordLabResultsScreen.swift */,
+				6B0019672BDEA37F00ED923D /* CalendarView.swift */,
 				6B00196B2BDEA3A100ED923D /* RecordsListView.swift */,
 				6B00196D2BDEA3B600ED923D /* CalendarCellRecordsView.swift */,
-				6B00196F2BDEA3C800ED923D /* RecordSymptomsScreen.swift */,
 				6B0019712BDEA3D800ED923D /* PainAreasView.swift */,
 				6B0019732BDEA3EA00ED923D /* ChooseBASDAIView.swift */,
-				6B0019752BDEA40000ED923D /* RecordMedicationScreen.swift */,
-				6B0019772BDEA40F00ED923D /* RecordLabResultsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -325,7 +325,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B0019782BDEA40F00ED923D /* RecordLabResultsView.swift in Sources */,
+				6B0019782BDEA40F00ED923D /* RecordLabResultsScreen.swift in Sources */,
 				6B0019702BDEA3C800ED923D /* RecordSymptomsScreen.swift in Sources */,
 				6B0019322BDEA2D300ED923D /* Rapha_RemasteredApp.swift in Sources */,
 				6B0019622BDEA33400ED923D /* DataModel.swift in Sources */,
