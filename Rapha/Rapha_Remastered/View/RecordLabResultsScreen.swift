@@ -27,11 +27,13 @@ struct RecordLabResultsScreen: View {
                         Text("ESR")
                         Spacer()
                         TextField("ESR", text: $ESR)
+                            .keyboardType(.decimalPad)
                     }
                     HStack{
                         Text("CRP")
                         Spacer()
                         TextField("CRP", text: $CRP)
+                            .keyboardType(.decimalPad)
                     }
                 } header:{
                     Text("Inflammation")
