@@ -27,24 +27,6 @@ struct RecordsListView: View {
         case labResults = "Lab Results"
     }
     
-    var calculatedBASDAI: String{
-        var formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 1
-        if let qnsAns = currentCalendarData?.symptoms?.qnsBASDAI{
-            let sumOneToFour: Float = (qnsAns[0] ?? 0) + (qnsAns[1] ?? 0) + (qnsAns[2] ?? 0) + (qnsAns[3] ?? 0)
-            let sumFiveAndSix: Float = (qnsAns[4] ?? 0) + (qnsAns[5] ?? 0)
-            let result = (sumOneToFour + sumFiveAndSix / 2) / 5
-            if let resultStr = formatter.string(for: result){
-                return resultStr
-            }else{
-                print("Error: Unable to format result")
-                return "0"
-            }
-        }
-        print("Error: Unable to find BASDAI values")
-        return "0"
-    }
-    
     var body: some View {
         
         List{
@@ -104,23 +86,6 @@ struct RecordsListView: View {
         }
     }
     
-//    @ViewBuilder
-//    var symptomsView: some View {
-//        Image(systemName: currentCalendarData?.symptoms == nil ? "circle" : "circle.fill")
-//            .resizable()
-//            .scaledToFit()
-//            .frame(width: 10)
-//            .foregroundColor(.symptoms)
-//        VStack(alignment: .leading){
-//            Text(record.rawValue)
-//            if let symptoms = currentCalendarData?.symptoms{
-//                Text("\(symptoms.painAreas?.count ?? 0) Pain areas, \(calculatedBASDAI) BASDAI")
-//                    .foregroundStyle(.subtitle)
-//                    .font(.system(size: 15))
-//            }
-//        }.padding(.leading, 7)
-//    }
-    
     private func symptomsView(_ record: RecordType) -> some View{
         HStack{
             Image(systemName: currentCalendarData?.symptoms == nil ? "circle" : "circle.fill")
@@ -131,7 +96,7 @@ struct RecordsListView: View {
             VStack(alignment: .leading){
                 Text(record.rawValue)
                 if let symptoms = currentCalendarData?.symptoms{
-                    Text("\(symptoms.painAreas?.count ?? 0) Pain areas, \(calculatedBASDAI) BASDAI")
+                    Text("\(symptoms.painAreas?.count ?? 0) Pain areas, \(currentCalendarData?.calculatedBASDAI ?? "0") BASDAI")
                         .foregroundStyle(.subtitle)
                         .font(.system(size: 15))
                 }

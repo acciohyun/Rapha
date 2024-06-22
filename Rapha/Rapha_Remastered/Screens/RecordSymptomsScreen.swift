@@ -9,24 +9,6 @@ import Foundation
 import SwiftUI
 import SwiftData
 
-extension CalendarDate {
-    var calculatedBASDAI: String{
-        var formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 1
-        if let qnsAns = self.symptoms?.qnsBASDAI{
-            let sumOneToFour: Float = (qnsAns[0] ?? 0) + (qnsAns[1] ?? 0) + (qnsAns[2] ?? 0) + (qnsAns[3] ?? 0)
-            let sumFiveAndSix: Float = (qnsAns[4] ?? 0) + (qnsAns[5] ?? 0)
-            let result = (sumOneToFour + sumFiveAndSix / 2) / 5
-            if let resultStr = formatter.string(for: result){
-                return resultStr
-            }else{
-                return "0"
-            }
-        }
-        return "0"
-    }
-}
-
 struct RecordSymptomsScreen: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var modelContext
@@ -100,7 +82,7 @@ struct RecordSymptomsScreen: View {
                                 .scaledToFit()
                                 .frame(width: 37)
                                 .foregroundColor(.accent)
-                            Text("\(currentCalendarData.calculatedBASDAI)")
+                            Text("\(currentCalendarData?.calculatedBASDAI ?? "0")")
                                 .foregroundStyle(.white)
                                 .font(.system(size: 16))
                                 .fontWeight(.bold)
@@ -121,7 +103,7 @@ struct RecordSymptomsScreen: View {
             
         }.onAppear(){
             currentCalendarData = allRecords.filter({ $0.date.startOfDay == currentDate.startOfDay}).first
-            if let existingData = currentCalendarData{}else{
+            if currentCalendarData == nil{
                 currentCalendarData = CalendarDate(date: currentDate)
                 modelContext.container.mainContext.insert(currentCalendarData!)
                 do {
@@ -130,12 +112,7 @@ struct RecordSymptomsScreen: View {
                     print("not saved: error")
                 }
             }
-//            if currentCalendarData?.symptoms != nil {
-//                
-//            }
-            if let symptoms = currentCalendarData?.symptoms{
-                
-            }else{
+            if currentCalendarData?.symptoms == nil {
                 currentCalendarData?.symptoms = Symptoms(date: currentCalendarData!)
             }
             notes = currentCalendarData?.symptoms?.notes ?? ""

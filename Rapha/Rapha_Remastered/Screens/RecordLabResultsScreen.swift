@@ -46,7 +46,7 @@ struct RecordLabResultsScreen: View {
             }
         }.onAppear(){
             currentCalendarData = allRecords.filter({ $0.date.startOfDay == currentDate.startOfDay}).first
-            if currentCalendarData != nil{}else{
+            if currentCalendarData == nil {
                 currentCalendarData = CalendarDate(date: currentDate)
                 modelContext.container.mainContext.insert(currentCalendarData!)
                 do {
@@ -82,7 +82,7 @@ struct RecordLabResultsScreen: View {
         }
         .alert("Delete record", isPresented: $showingAlert) {
             Button("Delete", role: .destructive) {
-                if let data = currentCalendarData?.labResults{
+                if currentCalendarData?.labResults != nil {
                     currentCalendarData?.labResults = nil
                     dismiss()
                 }

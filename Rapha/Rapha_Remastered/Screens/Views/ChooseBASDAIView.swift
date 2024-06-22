@@ -19,7 +19,7 @@ struct ChooseBASDAIView: View {
     
     
     var body: some View {
-        ForEach(record.qnsCollection){qns in
+        ForEach(IndivQnsBASDAIEnum.allCases, id: \.rawValue){qns in
             HStack(){
                 VStack(alignment: .leading){
                     Text(qns.mainQns)
@@ -28,11 +28,11 @@ struct ChooseBASDAIView: View {
                         .font(.system(size: 15))
                 }.frame()
                 Spacer()
-                Picker("", selection: $ans[qns.id]) {
+                Picker("", selection: $ans[qns.rawValue]) {
                     ForEach(0..<11, id: \.self) { i in
                         Text("\(i)").tag(Optional(Float(i)))
                     }
-                }.id(qns.id).frame(width: 60)
+                }.id(qns.rawValue).frame(width: 60)
                 
                 
             }

@@ -90,3 +90,21 @@ class CategoryOfRecord: Identifiable{
 class RecordCopy: ObservableObject{
     @Published var allRecords = [CalendarDate]()
 }
+
+extension CalendarDate {
+    var calculatedBASDAI: String{
+        var formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 1
+        if let qnsAns = self.symptoms?.qnsBASDAI{
+            let sumOneToFour: Float = (qnsAns[0] ?? 0) + (qnsAns[1] ?? 0) + (qnsAns[2] ?? 0) + (qnsAns[3] ?? 0)
+            let sumFiveAndSix: Float = (qnsAns[4] ?? 0) + (qnsAns[5] ?? 0)
+            let result = (sumOneToFour + sumFiveAndSix / 2) / 5
+            if let resultStr = formatter.string(for: result){
+                return resultStr
+            }else{
+                return "0"
+            }
+        }
+        return "0"
+    }
+}

@@ -30,9 +30,7 @@ struct RecordMedicationScreen: View {
             
         }.onAppear(){
             currentCalendarData = allRecords.filter({ $0.date.startOfDay == currentDate.startOfDay}).first
-            if currentCalendarData != nil{
-                
-            }else{
+            if currentCalendarData == nil{
                 currentCalendarData = CalendarDate(date: currentDate)
                 modelContext.container.mainContext.insert(currentCalendarData!)
                 do {
@@ -42,7 +40,7 @@ struct RecordMedicationScreen: View {
                 }
                 print("\(allRecords)")
             }
-            if (currentCalendarData?.medication) != nil{}else{
+            if (currentCalendarData?.medication) == nil {
                 currentCalendarData?.medication = Medication(date: currentCalendarData!)
             }
             medsTaken = currentCalendarData?.medication?.amgevitaTaken ?? false
@@ -61,7 +59,7 @@ struct RecordMedicationScreen: View {
         }
         .alert("Delete record", isPresented: $showingAlert) {
             Button("Delete", role: .destructive) {
-                if let data = currentCalendarData?.medication{
+                if currentCalendarData?.medication != nil {
                     currentCalendarData?.medication = nil
                     dismiss()
                 }
