@@ -26,7 +26,7 @@ struct ChooseBASDAIView: View {
                     Text(qns.subQns)
                         .foregroundStyle(.subtitle)
                         .font(.system(size: 15))
-                }.frame()
+                }
                 Spacer()
                 Picker("", selection: $ans[qns.rawValue]) {
                     ForEach(0..<11, id: \.self) { i in

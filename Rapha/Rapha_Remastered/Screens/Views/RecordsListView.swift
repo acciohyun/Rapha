@@ -28,7 +28,6 @@ struct RecordsListView: View {
     }
     
     var body: some View {
-        
         List{
             ForEach(RecordType.allCases){ record in
                 NavigationLink(value: record){
@@ -37,33 +36,9 @@ struct RecordsListView: View {
                         case .symptoms:
                             symptomsView(record)
                         case .medication:
-                            Image(systemName: currentCalendarData?.medication == nil ? "circle" : "circle.fill")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 10)
-                                .foregroundColor(.medication)
-                            VStack(alignment: .leading){
-                                Text(record.rawValue)
-                                if let meds = currentCalendarData?.medication{
-                                    Text(meds.amgevitaTaken ? "Amgevita taken" : "Amgevita not taken")
-                                        .foregroundStyle(.subtitle)
-                                        .font(.system(size: 15))
-                                }
-                            }.padding(.leading, 7)
+                            medicationView(record)
                         case .labResults:
-                            Image(systemName: currentCalendarData?.labResults == nil ? "circle" : "circle.fill")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 10)
-                                .foregroundColor(.labResult)
-                            VStack(alignment: .leading){
-                                Text(record.rawValue)
-                                if let lab = currentCalendarData?.labResults{
-                                    Text("ESR: \(lab.inflammation["ESR"] ?? "0"), CRP: \(lab.inflammation["CRP"] ?? "0")")
-                                        .foregroundStyle(.subtitle)
-                                        .font(.system(size: 15))
-                                }
-                            }.padding(.leading, 7)
+                            labResultsView(record)
                         }
                     }
                 }
@@ -103,6 +78,43 @@ struct RecordsListView: View {
             }.padding(.leading, 7)
         }
     }
+    
+    private func medicationView(_ record: RecordType) -> some View{
+        HStack{
+            Image(systemName: currentCalendarData?.medication == nil ? "circle" : "circle.fill")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 10)
+                .foregroundColor(.medication)
+            VStack(alignment: .leading){
+                Text(record.rawValue)
+                if let meds = currentCalendarData?.medication{
+                    Text(meds.amgevitaTaken ? "Amgevita taken" : "Amgevita not taken")
+                        .foregroundStyle(.subtitle)
+                        .font(.system(size: 15))
+                }
+            }.padding(.leading, 7)
+        }
+    }
+    
+    private func labResultsView(_ record: RecordType) -> some View{
+        HStack{
+            Image(systemName: currentCalendarData?.labResults == nil ? "circle" : "circle.fill")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 10)
+                .foregroundColor(.labResult)
+            VStack(alignment: .leading){
+                Text(record.rawValue)
+                if let lab = currentCalendarData?.labResults{
+                    Text("ESR: \(lab.inflammation["ESR"] ?? "0"), CRP: \(lab.inflammation["CRP"] ?? "0")")
+                        .foregroundStyle(.subtitle)
+                        .font(.system(size: 15))
+                }
+            }.padding(.leading, 7)
+        }
+    }
+    
     
     func updateView(){
         currentCalendarData = allRecords.filter({ $0.date.startOfDay == currentDate.startOfDay}).first

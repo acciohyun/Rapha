@@ -18,21 +18,6 @@ struct RecordSymptomsScreen: View {
     @State var showingAlert = false
     
     var currentDate: Date
-    var calculatedBASDAI: String{
-        var formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 1
-        if let qnsAns = currentCalendarData?.symptoms?.qnsBASDAI{
-            let sumOneToFour: Float = (qnsAns[0] ?? 0) + (qnsAns[1] ?? 0) + (qnsAns[2] ?? 0) + (qnsAns[3] ?? 0)
-            let sumFiveAndSix: Float = (qnsAns[4] ?? 0) + (qnsAns[5] ?? 0)
-            let result = (sumOneToFour + sumFiveAndSix / 2) / 5
-            if let resultStr = formatter.string(for: result){
-                return resultStr
-            }else{
-                return "0"
-            }
-        }
-        return "0"
-    }
     
     var body: some View {
         Text("\(currentDate.simplifiedDate)")

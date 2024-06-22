@@ -27,7 +27,7 @@ struct PainAreasView: View {
                     .frame(height: 500)
             }.onTapGesture{ location in
                 if let existingPointIndex = isExistingPoint(at: location){
-                    if let pains = symptomData?.painAreas{
+                    if (symptomData?.painAreas) != nil{
                         symptomData?.painAreas?.remove(at: existingPointIndex)
                     }
                 }else{
