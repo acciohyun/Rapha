@@ -30,7 +30,9 @@ struct RecordMedicationScreen: View {
             
         }.onAppear(){
             currentCalendarData = allRecords.filter({ $0.date.startOfDay == currentDate.startOfDay}).first
-            if currentCalendarData != nil{}else{
+            if currentCalendarData != nil{
+                
+            }else{
                 currentCalendarData = CalendarDate(date: currentDate)
                 modelContext.container.mainContext.insert(currentCalendarData!)
                 do {

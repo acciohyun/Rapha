@@ -18,6 +18,13 @@ class RecordsModel: ObservableObject{
     func calculatedBASDAI(qnsBASDAI: [String : Float] ) -> Float{
         let sumOneToFour: Float = (qnsBASDAI["Q1"] ?? 0) + (qnsBASDAI["Q2"] ?? 0) + (qnsBASDAI["Q3"] ?? 0) + (qnsBASDAI["Q4"] ?? 0)
         let sumFiveAndSix: Float = (qnsBASDAI["Q5"] ?? 0) + (qnsBASDAI["Q6"] ?? 0)
+//        var sum: Float = 0
+//        for i in 1...6 {
+//            if let value = qnsBASDAI["Q\(i)"] {
+//                sum += value
+//            }
+//        }
+//        return sum / 5
         return (sumOneToFour + sumFiveAndSix / 2) / 5
     }
     
@@ -31,6 +38,29 @@ class RecordsModel: ObservableObject{
     var records: [CalendarDate]{
         print("observed: \(allRecords)")
         return allRecords
+    }
+}
+
+enum IndivQnsBASDAIEnum: Int, CaseIterable {
+    case q1 = 1
+    case q2
+    case q3
+    case q4
+    case q5
+    case q6
+    
+    var mainQns: String {
+//        switch self {
+//            "qn"
+//        }
+        return ""
+    }
+    
+    var subQns: String {
+//        switch self {
+//            "subQns"
+//        }
+        return ""
     }
 }
 

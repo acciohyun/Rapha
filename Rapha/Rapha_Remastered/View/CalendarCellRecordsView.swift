@@ -10,6 +10,16 @@ import SwiftUI
 
 struct CalendarCellRecordsView: View {
     let record: CalendarDate
+    
+    private var imageColor: Color {
+        if let _ = record.symptoms {
+            return .symptoms
+        } else if let _ = record.medication {
+            return .medication
+        }
+        return .labResult
+    }
+    
     var body: some View {
         HStack(spacing: 3){
             if let symptoms = record.symptoms{

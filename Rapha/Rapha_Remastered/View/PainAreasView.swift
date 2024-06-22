@@ -15,6 +15,8 @@ struct PainAreasView: View {
     @Query var allRecords: [CalendarDate]
     var currentDate: Date
     
+    //property is in VM, shared through observable object / observed object / bindable
+    
     var body: some View {
         ZStack(alignment: .center){
             Color.clear

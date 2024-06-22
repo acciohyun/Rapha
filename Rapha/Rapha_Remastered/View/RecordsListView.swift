@@ -19,8 +19,8 @@ struct RecordsListView: View {
     @State var currentCalendarData: CalendarDate?
     @Binding var currentDate: Date
     private enum RecordType: String, Hashable, CaseIterable, Identifiable{
-        var id: Self{
-            return self
+        var id: String{
+            return self.rawValue
         }
         case symptoms = "Symptoms"
         case medication = "Medication"
@@ -37,10 +37,10 @@ struct RecordsListView: View {
             if let resultStr = formatter.string(for: result){
                 return resultStr
             }else{
-                return "0"
+                return "0" // "Err"
             }
         }
-        return "0"
+        return "0" //"Err" for debugging purposes
     }
     
     var body: some View {
@@ -51,19 +51,7 @@ struct RecordsListView: View {
                     HStack{
                         switch record{
                         case .symptoms:
-                            Image(systemName: currentCalendarData?.symptoms == nil ? "circle" : "circle.fill")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 10)
-                                .foregroundColor(.symptoms)
-                            VStack(alignment: .leading){
-                                Text(record.rawValue)
-                                if let symptoms = currentCalendarData?.symptoms{
-                                    Text("\(symptoms.painAreas?.count ?? 0) Pain areas, \(calculatedBASDAI) BASDAI")
-                                        .foregroundStyle(.subtitle)
-                                        .font(.system(size: 15))
-                                }
-                            }.padding(.leading, 7)
+                            symptomsView(record)
                         case .medication:
                             Image(systemName: currentCalendarData?.medication == nil ? "circle" : "circle.fill")
                                 .resizable()
@@ -98,7 +86,7 @@ struct RecordsListView: View {
             }
         }
         .onChange(of: currentDate){
-            updateView()
+            updateView() //unclear: updateCurrentCalendarData
         }.onAppear(){
             updateView()
         }
@@ -113,6 +101,42 @@ struct RecordsListView: View {
             }
         }
     }
+    
+//    @ViewBuilder
+//    var symptomsView: some View {
+//        Image(systemName: currentCalendarData?.symptoms == nil ? "circle" : "circle.fill")
+//            .resizable()
+//            .scaledToFit()
+//            .frame(width: 10)
+//            .foregroundColor(.symptoms)
+//        VStack(alignment: .leading){
+//            Text(record.rawValue)
+//            if let symptoms = currentCalendarData?.symptoms{
+//                Text("\(symptoms.painAreas?.count ?? 0) Pain areas, \(calculatedBASDAI) BASDAI")
+//                    .foregroundStyle(.subtitle)
+//                    .font(.system(size: 15))
+//            }
+//        }.padding(.leading, 7)
+//    }
+    
+    private func symptomsView(_ record: RecordType) -> some View{
+        HStack{
+            Image(systemName: currentCalendarData?.symptoms == nil ? "circle" : "circle.fill")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 10)
+                .foregroundColor(.symptoms)
+            VStack(alignment: .leading){
+                Text(record.rawValue)
+                if let symptoms = currentCalendarData?.symptoms{
+                    Text("\(symptoms.painAreas?.count ?? 0) Pain areas, \(calculatedBASDAI) BASDAI")
+                        .foregroundStyle(.subtitle)
+                        .font(.system(size: 15))
+                }
+            }.padding(.leading, 7)
+        }
+    }
+    
     func updateView(){
         currentCalendarData = allRecords.filter({ $0.date.startOfDay == currentDate.startOfDay}).first
         if currentCalendarData != nil{
