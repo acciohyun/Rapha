@@ -26,7 +26,6 @@ struct PainAreasView: View {
                     .scaledToFit()
                     .frame(height: 500)
             }.onTapGesture{ location in
-                print("Tapped at \(location)")
                 if let existingPointIndex = isExistingPoint(at: location){
                     if let pains = symptomData?.painAreas{
                         symptomData?.painAreas?.remove(at: existingPointIndex)
@@ -43,14 +42,11 @@ struct PainAreasView: View {
                         .scaledToFit()
                         .frame(width: 30)
                         .foregroundColor(.symptoms)
-                    .position(x:CGFloat(painPoint.coordinateX + 33), y: CGFloat(painPoint.coordinateY + 3))                }
+                        .position(x:CGFloat(painPoint.coordinateX + 33), y: CGFloat(painPoint.coordinateY + 3))
+                }
             }
         }.onAppear(){
             symptomData = allRecords.filter({ $0.date.startOfDay == currentDate.startOfDay}).first?.symptoms
-            if let painAreas = symptomData?.painAreas{
-                print("svaed count: \(painAreas.count)")
-            }
-            print("todays: records\(allRecords)")
         }
         .aspectRatio(2.68, contentMode: .fit)
     }
@@ -69,22 +65,18 @@ struct PainAreasView: View {
                 }
             }
         }
-        print("here")
         return nil
     }
     func addPoint(at location: CGPoint){
         if symptomData?.painAreas != nil {
-            print("added")
             symptomData!.painAreas?.append(PainArea(x: Float(location.x), y: Float(location.y)))
         }else{
             symptomData!.painAreas = [PainArea(x: Float(location.x), y: Float(location.y))]
         }
         do {
-            print("saved")
             try modelContext.save()
         }catch{
-            print("not saved: error")
+            print("Error: Unable to save")
         }
-        print("\(symptomData!.painAreas!.count)")
     }
 }

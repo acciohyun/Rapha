@@ -50,10 +50,9 @@ struct ChooseBASDAIView: View {
                 symptomData?.qnsBASDAI = data.qnsBASDAI
             }
             do {
-                print("saved")
                 try modelContext.save()
             }catch{
-                print("not saved: error")
+                print("Error: Unable to save")
             }
         }
     }

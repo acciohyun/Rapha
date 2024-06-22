@@ -52,7 +52,7 @@ struct RecordLabResultsScreen: View {
                 do {
                     try modelContext.save()
                 }catch{
-                    print("not saved: error")
+                    print("Error: Unable to save")
                 }
             }
             if (currentCalendarData?.labResults) == nil {

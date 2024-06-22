@@ -37,10 +37,12 @@ struct RecordsListView: View {
             if let resultStr = formatter.string(for: result){
                 return resultStr
             }else{
-                return "0" // "Err"
+                print("Error: Unable to format result")
+                return "0"
             }
         }
-        return "0" //"Err" for debugging purposes
+        print("Error: Unable to find BASDAI values")
+        return "0"
     }
     
     var body: some View {

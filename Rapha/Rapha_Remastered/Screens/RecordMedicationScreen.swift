@@ -38,12 +38,11 @@ struct RecordMedicationScreen: View {
                 do {
                     try modelContext.save()
                 }catch{
-                    print("not saved: error")
+                    print("Error: Unable to save")
                 }
                 print("\(allRecords)")
             }
             if (currentCalendarData?.medication) != nil{}else{
-                print("created medication")
                 currentCalendarData?.medication = Medication(date: currentCalendarData!)
             }
             medsTaken = currentCalendarData?.medication?.amgevitaTaken ?? false
