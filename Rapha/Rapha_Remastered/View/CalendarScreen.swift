@@ -24,11 +24,6 @@ struct CalendarScreen: View {
                 CalendarView(interval: DateInterval(start: .distantPast, end: .now), selectedDate: $currentDate, recordCopyClass: $recordCopyClass)
                 RecordsListView(currentDate: $currentDate)
             }
-//            .toolbar{
-//                Button("Today"){
-////                    currentDate = Date()
-//                }
-//            }
         }.onChange(of: allRecords){
             recordCopyClass.allRecords = allRecords
             do{

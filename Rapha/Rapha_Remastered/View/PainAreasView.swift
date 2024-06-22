@@ -88,7 +88,3 @@ struct PainAreasView: View {
         print("\(symptomData!.painAreas!.count)")
     }
 }
-
-//#Preview {
-//    RecordSymptomsScreen().environmentObject(MetaData())
-//}
