@@ -10,23 +10,33 @@ import SwiftUI
 
 struct CalendarCellRecordsView: View {
     let record: CalendarDate
+    
+    private var imageColor: Color {
+        if let _ = record.symptoms {
+            return .symptoms
+        } else if let _ = record.medication {
+            return .medication
+        }
+        return .labResult
+    }
+    
     var body: some View {
         HStack(spacing: 3){
-            if let symptoms = record.symptoms{
+            if record.symptoms != nil{
                 Image(systemName: "circle.fill")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 7)
                     .foregroundColor(.symptoms)
             }
-            if let medication = record.medication{
+            if record.medication != nil{
                 Image(systemName: "circle.fill")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 7)
                     .foregroundColor(.medication)
             }
-            if let labResults = record.labResults{
+            if record.labResults != nil{
                 Image(systemName: "circle.fill")
                     .resizable()
                     .scaledToFit()

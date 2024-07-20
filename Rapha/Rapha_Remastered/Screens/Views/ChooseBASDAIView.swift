@@ -19,20 +19,20 @@ struct ChooseBASDAIView: View {
     
     
     var body: some View {
-        ForEach(record.qnsCollection){qns in
+        ForEach(IndivQnsBASDAIEnum.allCases, id: \.rawValue){qns in
             HStack(){
                 VStack(alignment: .leading){
                     Text(qns.mainQns)
                     Text(qns.subQns)
                         .foregroundStyle(.subtitle)
                         .font(.system(size: 15))
-                }.frame()
+                }
                 Spacer()
-                Picker("", selection: $ans[qns.id]) {
+                Picker("", selection: $ans[qns.rawValue]) {
                     ForEach(0..<11, id: \.self) { i in
                         Text("\(i)").tag(Optional(Float(i)))
                     }
-                }.id(qns.id).frame(width: 60)
+                }.id(qns.rawValue).frame(width: 60)
                 
                 
             }
@@ -50,10 +50,9 @@ struct ChooseBASDAIView: View {
                 symptomData?.qnsBASDAI = data.qnsBASDAI
             }
             do {
-                print("saved")
                 try modelContext.save()
             }catch{
-                print("not saved: error")
+                print("Error: Unable to save")
             }
         }
     }

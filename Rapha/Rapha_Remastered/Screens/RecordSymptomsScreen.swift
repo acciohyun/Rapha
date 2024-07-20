@@ -14,25 +14,10 @@ struct RecordSymptomsScreen: View {
     @Environment(\.modelContext) private var modelContext
     @State var currentCalendarData: CalendarDate?
     @Query var allRecords: [CalendarDate]
-    @State var notes: String = ""
+    @State var notes: String = "" //note
     @State var showingAlert = false
     
     var currentDate: Date
-    var calculatedBASDAI: String{
-        var formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 1
-        if let qnsAns = currentCalendarData?.symptoms?.qnsBASDAI{
-            let sumOneToFour: Float = (qnsAns[0] ?? 0) + (qnsAns[1] ?? 0) + (qnsAns[2] ?? 0) + (qnsAns[3] ?? 0)
-            let sumFiveAndSix: Float = (qnsAns[4] ?? 0) + (qnsAns[5] ?? 0)
-            let result = (sumOneToFour + sumFiveAndSix / 2) / 5
-            if let resultStr = formatter.string(for: result){
-                return resultStr
-            }else{
-                return "0"
-            }
-        }
-        return "0"
-    }
     
     var body: some View {
         Text("\(currentDate.simplifiedDate)")
@@ -82,7 +67,7 @@ struct RecordSymptomsScreen: View {
                                 .scaledToFit()
                                 .frame(width: 37)
                                 .foregroundColor(.accent)
-                            Text("\(calculatedBASDAI)")
+                            Text("\(currentCalendarData?.calculatedBASDAI ?? "0")")
                                 .foregroundStyle(.white)
                                 .font(.system(size: 16))
                                 .fontWeight(.bold)
@@ -103,7 +88,7 @@ struct RecordSymptomsScreen: View {
             
         }.onAppear(){
             currentCalendarData = allRecords.filter({ $0.date.startOfDay == currentDate.startOfDay}).first
-            if let existingData = currentCalendarData{}else{
+            if currentCalendarData == nil{
                 currentCalendarData = CalendarDate(date: currentDate)
                 modelContext.container.mainContext.insert(currentCalendarData!)
                 do {
@@ -112,7 +97,7 @@ struct RecordSymptomsScreen: View {
                     print("not saved: error")
                 }
             }
-            if let symptoms = currentCalendarData?.symptoms{}else{
+            if currentCalendarData?.symptoms == nil {
                 currentCalendarData?.symptoms = Symptoms(date: currentCalendarData!)
             }
             notes = currentCalendarData?.symptoms?.notes ?? ""

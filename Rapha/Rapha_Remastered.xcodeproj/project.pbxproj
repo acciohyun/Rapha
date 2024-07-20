@@ -119,7 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				6B00195E2BDEA31100ED923D /* Extensions */,
-				6B00195D2BDEA30B00ED923D /* View */,
+				6B00195D2BDEA30B00ED923D /* Screens */,
 				6B0019602BDEA31F00ED923D /* ViewModel */,
 				6B00195F2BDEA31700ED923D /* Model */,
 				6B0019312BDEA2D300ED923D /* Rapha_RemasteredApp.swift */,
@@ -154,20 +154,16 @@
 			path = Rapha_RemasteredUITests;
 			sourceTree = "<group>";
 		};
-		6B00195D2BDEA30B00ED923D /* View */ = {
+		6B00195D2BDEA30B00ED923D /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				6B8F23D42C266F66004FA548 /* Views */,
 				6B0019692BDEA39000ED923D /* CalendarScreen.swift */,
 				6B00196F2BDEA3C800ED923D /* RecordSymptomsScreen.swift */,
 				6B0019752BDEA40000ED923D /* RecordMedicationScreen.swift */,
 				6B0019772BDEA40F00ED923D /* RecordLabResultsScreen.swift */,
-				6B0019672BDEA37F00ED923D /* CalendarView.swift */,
-				6B00196B2BDEA3A100ED923D /* RecordsListView.swift */,
-				6B00196D2BDEA3B600ED923D /* CalendarCellRecordsView.swift */,
-				6B0019712BDEA3D800ED923D /* PainAreasView.swift */,
-				6B0019732BDEA3EA00ED923D /* ChooseBASDAIView.swift */,
 			);
-			path = View;
+			path = Screens;
 			sourceTree = "<group>";
 		};
 		6B00195E2BDEA31100ED923D /* Extensions */ = {
@@ -193,6 +189,18 @@
 			children = (
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		6B8F23D42C266F66004FA548 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6B0019672BDEA37F00ED923D /* CalendarView.swift */,
+				6B00196D2BDEA3B600ED923D /* CalendarCellRecordsView.swift */,
+				6B00196B2BDEA3A100ED923D /* RecordsListView.swift */,
+				6B0019712BDEA3D800ED923D /* PainAreasView.swift */,
+				6B0019732BDEA3EA00ED923D /* ChooseBASDAIView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -514,7 +522,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaHyun.Rapha-Remastered";
 				PRODUCT_NAME = Rapha;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -547,7 +555,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaHyun.Rapha-Remastered";
 				PRODUCT_NAME = Rapha;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
