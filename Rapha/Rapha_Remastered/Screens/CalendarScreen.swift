@@ -20,8 +20,7 @@ struct CalendarScreen: View {
     var body: some View {
         NavigationStack{
             VStack {
-//                @Bindable var bindedRecords = allRecords
-                CalendarView(interval: DateInterval(start: .distantPast, end: .now), selectedDate: $currentDate, recordCopyClass: $recordCopyClass)
+                CalendarView(selectedDate: $currentDate, recordCopyClass: $recordCopyClass)
                 RecordsListView(currentDate: $currentDate)
             }
         }.onChange(of: allRecords){
@@ -34,6 +33,5 @@ struct CalendarScreen: View {
         }.onAppear(){
             recordCopyClass.allRecords = allRecords
         }
-    }
-}
+    }}
 
